@@ -48,7 +48,11 @@ And many more. The point is that the model can be used to help people make decis
 
 The goal of this demo is to offer very preliminary insight into how models developed in cognitive science to understand how *people* learn and decide efficiently and (in most cases) accurately, can be used to both make AI systems learn better, by allowing them to make assumptions about how data is generated, as well as track the mental states and behavior of the user/analyst.
 
-# Setup Hypothesis Space
+# Scenario: program the model's inference based on intel about the informant
+
+In this scenario, we assume have information that allows us to infer how much to trust the informant, which we can program into the model. In practice, this could be derived from the informant's track record of providing reliable data, their qualifications, conflicts of interests (or lack thereof), just to name a few. 
+
+## Setup Hypothesis Space
 
 We begin by defining a simple 2D grid and generating all possible rectangular hypotheses. Each hypothesis corresponds to a possible hidden area that an informant might be trying to convey.
 
@@ -83,10 +87,6 @@ This plot shows the full hypothesis space — all possible areas that the inform
 # Plot the entire hypothesis space to visualize all possible rectangles
 plotEmptyHypotheses(hyp)
 ```
-
-# Scenario: program the model's inference based on intel about the informant
-
-In this scenario, we assume have information that allows us to infer how much to trust the informant, which we can program into the model. In practice, this could be derived from the informant's track record of providing reliable data, their qualifications, conflicts of interests (or lack thereof), just to name a few. 
 
 ## Step 1: Define how much the model should trust the informant
 
@@ -123,7 +123,7 @@ for (informant in names(informants)) {
 
 Now we'll simulate how different informants provide clues and how the model updates its beliefs.
 
-# Step 3: The informant provides clues
+## Step 3: The informant provides clues
 
 ```{r}
 # Select 2 random points as clues from the grid for the demo
@@ -147,7 +147,7 @@ ggplot() +
 
 For simplicity, assume the informant cannot lie (as detailed in my paper, this is often a realistic assumption). This means the rectangles consistent with the clues are the only possible true rectangles.
 
-# Step 4: Model updates its beliefs based on the clues
+## Step 4: Model updates its beliefs based on the clues
 
 Now that we have the clues, we can update the model's beliefs about the true rectangle. The model will calculate the posterior probabilities of each hypothesis given the clues it has seen and how much it trusts the informant.
 
@@ -197,7 +197,7 @@ The above plots show a few things. First, they show how the model can adjust its
 
 Second the plots show us how, using these models, we can get not just a recommendation for what the most likely hypothesis is, but also how confident the model is about that recomendation. This is a key strength of Bayesian inference, as it naturally calculates the probability of every choice alternative, therefore providing the analyst more information to make their own inference.
 
-# Step 5: Analyst makes their own inference based on the clue
+## Step 5: Analyst makes their own inference based on the clue
 
 Another advantage of this type of models is that it can not only make recommendations to a human analyst, but it can also monitor the analyst's decisions and give feedback on the quality of their inferences. Let's examine such a scenario, specifically, one where the model severely over-trusts the informant based on the informant's actual reliability: 
 
@@ -223,7 +223,7 @@ print(paste0("Analyst's confidence score: ", analyst_recommended[,"posterior"] -
 
 ```
 
-# Step 6: Model provides feedback on the analyst's guess
+## Step 6: Model provides feedback on the analyst's guess
 
 ```{r}
 analyst_trust <- 3

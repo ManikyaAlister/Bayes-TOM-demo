@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Minimal Demo: AI-Assisted Rectangle Inference</title>
+<title>Minimal Demo: AI-Assisted Inference using Bayesian Theory of Mind</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -79,20 +79,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#setup-hypothesis-space" id="toc-setup-hypothesis-space" class="nav-link active" data-scroll-target="#setup-hypothesis-space">Setup Hypothesis Space</a>
+  <li><a href="#scenario-program-the-models-inference-based-on-intel-about-the-informant" id="toc-scenario-program-the-models-inference-based-on-intel-about-the-informant" class="nav-link active" data-scroll-target="#scenario-program-the-models-inference-based-on-intel-about-the-informant">Scenario: program the model’s inference based on intel about the informant</a>
+  <ul class="collapse">
+  <li><a href="#setup-hypothesis-space" id="toc-setup-hypothesis-space" class="nav-link" data-scroll-target="#setup-hypothesis-space">Setup Hypothesis Space</a>
   <ul class="collapse">
   <li><a href="#plot-all-possible-hypotheses" id="toc-plot-all-possible-hypotheses" class="nav-link" data-scroll-target="#plot-all-possible-hypotheses">Plot all possible hypotheses</a></li>
   </ul></li>
-  <li><a href="#scenario-program-the-models-inference-based-on-intel-about-the-informant" id="toc-scenario-program-the-models-inference-based-on-intel-about-the-informant" class="nav-link" data-scroll-target="#scenario-program-the-models-inference-based-on-intel-about-the-informant">Scenario: program the model’s inference based on intel about the informant</a>
-  <ul class="collapse">
   <li><a href="#step-1-define-how-much-the-model-should-trust-the-informant" id="toc-step-1-define-how-much-the-model-should-trust-the-informant" class="nav-link" data-scroll-target="#step-1-define-how-much-the-model-should-trust-the-informant">Step 1: Define how much the model should trust the informant</a></li>
   <li><a href="#step-2-the-model-calculates-how-probable-it-is-that-a-learner-would-choose-different-points-for-each-possible-hypothesis." id="toc-step-2-the-model-calculates-how-probable-it-is-that-a-learner-would-choose-different-points-for-each-possible-hypothesis." class="nav-link" data-scroll-target="#step-2-the-model-calculates-how-probable-it-is-that-a-learner-would-choose-different-points-for-each-possible-hypothesis.">Step 2: The model calculates how probable it is that a learner would choose different points for each possible hypothesis.</a></li>
-  </ul></li>
   <li><a href="#step-3-the-informant-provides-clues" id="toc-step-3-the-informant-provides-clues" class="nav-link" data-scroll-target="#step-3-the-informant-provides-clues">Step 3: The informant provides clues</a></li>
   <li><a href="#step-4-model-updates-its-beliefs-based-on-the-clues" id="toc-step-4-model-updates-its-beliefs-based-on-the-clues" class="nav-link" data-scroll-target="#step-4-model-updates-its-beliefs-based-on-the-clues">Step 4: Model updates its beliefs based on the clues</a></li>
   <li><a href="#step-5-analyst-makes-their-own-inference-based-on-the-clue" id="toc-step-5-analyst-makes-their-own-inference-based-on-the-clue" class="nav-link" data-scroll-target="#step-5-analyst-makes-their-own-inference-based-on-the-clue">Step 5: Analyst makes their own inference based on the clue</a></li>
-  <li><a href="#step-6-model-provides-feedback-on-the-analysts-guess" id="toc-step-6-model-provides-feedback-on-the-analysts-guess" class="nav-link" data-scroll-target="#step-6-model-provides-feedback-on-the-analysts-guess">Step 6: Model provides feedback on the analyst’s guess</a>
-  <ul class="collapse">
+  <li><a href="#step-6-model-provides-feedback-on-the-analysts-guess" id="toc-step-6-model-provides-feedback-on-the-analysts-guess" class="nav-link" data-scroll-target="#step-6-model-provides-feedback-on-the-analysts-guess">Step 6: Model provides feedback on the analyst’s guess</a></li>
   <li><a href="#step-7-model-gives-feedback" id="toc-step-7-model-gives-feedback" class="nav-link" data-scroll-target="#step-7-model-gives-feedback">Step 7: Model gives feedback</a></li>
   </ul></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
@@ -104,7 +102,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Minimal Demo: AI-Assisted Rectangle Inference</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Minimal Demo: AI-Assisted Inference using Bayesian Theory of Mind</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
 </div>
 
 
@@ -147,8 +145,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>And many more. The point is that the model can be used to help people make decisions in a wide range of scenarios where they need to infer some hidden structure from a few clues, and where the trustworthiness of the informant is uncertain but can be inferred.</p>
 <p>The goal of this demo is to offer very preliminary insight into how models developed in cognitive science to understand how <em>people</em> learn and decide efficiently and (in most cases) accurately, can be used to both make AI systems learn better, by allowing them to make assumptions about how data is generated, as well as track the mental states and behavior of the user/analyst.</p>
-<section id="setup-hypothesis-space" class="level1">
-<h1>Setup Hypothesis Space</h1>
+<section id="scenario-program-the-models-inference-based-on-intel-about-the-informant" class="level1">
+<h1>Scenario: program the model’s inference based on intel about the informant</h1>
+<p>In this scenario, we assume have information that allows us to infer how much to trust the informant, which we can program into the model. In practice, this could be derived from the informant’s track record of providing reliable data, their qualifications, conflicts of interests (or lack thereof), just to name a few.</p>
+<section id="setup-hypothesis-space" class="level2">
+<h2 class="anchored" data-anchor-id="setup-hypothesis-space">Setup Hypothesis Space</h2>
 <p>We begin by defining a simple 2D grid and generating all possible rectangular hypotheses. Each hypothesis corresponds to a possible hidden area that an informant might be trying to convey.</p>
 <div class="cell">
 <details class="code-fold">
@@ -193,9 +194,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="scenario-program-the-models-inference-based-on-intel-about-the-informant" class="level1">
-<h1>Scenario: program the model’s inference based on intel about the informant</h1>
-<p>In this scenario, we assume have information that allows us to infer how much to trust the informant, which we can program into the model. In practice, this could be derived from the informant’s track record of providing reliable data, their qualifications, conflicts of interests (or lack thereof), just to name a few.</p>
 <section id="step-1-define-how-much-the-model-should-trust-the-informant" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-define-how-much-the-model-should-trust-the-informant">Step 1: Define how much the model should trust the informant</h2>
 <p>The model I will demonstrate has a single parameter, alpha, which defines how much it trusts an informant. An alpha &lt; 0 means the model assumes the informant is trying to <em>minimise</em> belief in the true hypothesis. That is, to systematically mislead the model/analyst. An alpha &gt; 0 means the informant is trying to <em>maximise</em> belief in the true hypothesis (i.e., be helpful). An alpha = 0 means that clues are being chosen at random (they are unreliable). In theory, it would be easy to develop a system that learns the appropriate alpha value from interacting with an informant over time, but that will not be the focus of this demo.</p>
@@ -235,9 +233,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Now we’ll simulate how different informants provide clues and how the model updates its beliefs.</p>
 </section>
-</section>
-<section id="step-3-the-informant-provides-clues" class="level1">
-<h1>Step 3: The informant provides clues</h1>
+<section id="step-3-the-informant-provides-clues" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-the-informant-provides-clues">Step 3: The informant provides clues</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -275,8 +272,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>For simplicity, assume the informant cannot lie (as detailed in my paper, this is often a realistic assumption). This means the rectangles consistent with the clues are the only possible true rectangles.</p>
 </section>
-<section id="step-4-model-updates-its-beliefs-based-on-the-clues" class="level1">
-<h1>Step 4: Model updates its beliefs based on the clues</h1>
+<section id="step-4-model-updates-its-beliefs-based-on-the-clues" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-model-updates-its-beliefs-based-on-the-clues">Step 4: Model updates its beliefs based on the clues</h2>
 <p>Now that we have the clues, we can update the model’s beliefs about the true rectangle. The model will calculate the posterior probabilities of each hypothesis given the clues it has seen and how much it trusts the informant.</p>
 <div class="cell">
 <details class="code-fold">
@@ -375,8 +372,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The above plots show a few things. First, they show how the model can adjust its inferences based on what we tell it about the informant: in this case, how much it should trust the clues it gives. This is very useful, because it allows the model to calibrate the efficiency with which it learns from someone based on what it knows about the informant, much like how humans do. This facilitates a vastly superior human-AI interaction, because in contexts where you have highly proficient and trustworthy informants, the model can learn much faster and more efficiently than it otherwise would. However, it can also adjust to situations where this is not the case, such as when the informant is basically just guessing, or if they may be systematically trying to mislead the analyst.</p>
 <p>Second the plots show us how, using these models, we can get not just a recommendation for what the most likely hypothesis is, but also how confident the model is about that recomendation. This is a key strength of Bayesian inference, as it naturally calculates the probability of every choice alternative, therefore providing the analyst more information to make their own inference.</p>
 </section>
-<section id="step-5-analyst-makes-their-own-inference-based-on-the-clue" class="level1">
-<h1>Step 5: Analyst makes their own inference based on the clue</h1>
+<section id="step-5-analyst-makes-their-own-inference-based-on-the-clue" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-analyst-makes-their-own-inference-based-on-the-clue">Step 5: Analyst makes their own inference based on the clue</h2>
 <p>Another advantage of this type of models is that it can not only make recommendations to a human analyst, but it can also monitor the analyst’s decisions and give feedback on the quality of their inferences. Let’s examine such a scenario, specifically, one where the model severely over-trusts the informant based on the informant’s actual reliability:</p>
 <div class="cell">
 <details class="code-fold">
@@ -411,8 +408,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="step-6-model-provides-feedback-on-the-analysts-guess" class="level1">
-<h1>Step 6: Model provides feedback on the analyst’s guess</h1>
+<section id="step-6-model-provides-feedback-on-the-analysts-guess" class="level2">
+<h2 class="anchored" data-anchor-id="step-6-model-provides-feedback-on-the-analysts-guess">Step 6: Model provides feedback on the analyst’s guess</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -434,6 +431,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] "Analyst's confidence score: 0.451361713033427"</code></pre>
 </div>
 </div>
+</section>
 <section id="step-7-model-gives-feedback" class="level2">
 <h2 class="anchored" data-anchor-id="step-7-model-gives-feedback">Step 7: Model gives feedback</h2>
 <p>We compare the analyst’s guess to the model’s own inference using the true informant reliability, and provide feedback on calibration.</p>
@@ -502,7 +500,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In the demonstration above, informant reliability is hard-coded into the model. While this is a simplification, it reflects a common real-world constraint: in many reasoning scenarios, we cannot directly verify the ground truth after an informant provides a recommendation. In such cases, it’s valuable for a model to be able to make probabilistic inferences based on prior assumptions about the informant’s trustworthiness.</p>
 <p>However, a more robust system would go further. Rather than fixing informant reliability, the model could be initialized with a prior belief (e.g., assuming low reliability by default) and update this belief over time as more data becomes available. This would allow the system to dynamically adapt to the actual reliability of each informant. Crucially, this kind of learning and adaptation is a natural fit for the modeling framework used here—one that supports both principled inference and efficient learning under uncertainty.</p>
 <p>Looking forward, there are exciting opportunities to extend this approach beyond the demo context and apply it to real-world decision-making environments. At a company like Maincode, this framework could be developed into powerful AI tools that work in tandem with human users—helping analysts, operators, or domain experts interpret ambiguous data, weigh competing sources of information, and make high-stakes decisions with calibrated confidence.</p>
-<p>For instance, a deployed version of this system could be used to support analysts in national security, medicine, finance, or policy—any domain where recommendations from diverse sources must be weighed under uncertainty. The system could track how much trust to place in different sources over time, detect when a user is becoming over- or under-confident, and provide transparent feedback to help improve human judgment. Importantly, this is not about replacing human reasoning, but about scaffolding it: using AI to support, amplify, and sharpen our cognitive capacities.</p>
+<p>For instance, a deployed version of this system could be used to support analysts in national security, medicine, finance, or policy: any domain where recommendations from diverse sources must be weighed under uncertainty. The system could track how much trust to place in different sources over time, detect when a user is becoming over- or under-confident, and provide transparent feedback to help improve human judgment. Importantly, this is not about replacing human reasoning, but about scaffolding it: using AI to support, amplify, and sharpen our cognitive capacities.</p>
 <p>This kind of human-centered AI is not only technically feasible but urgently needed—and I’d be excited to help build it.</p>
 </section>
 <section id="clarifying-my-goals-and-fit" class="level1">
@@ -985,7 +983,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb33" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Minimal Demo: AI-Assisted Rectangle Inference"</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Minimal Demo: AI-Assisted Inference using Bayesian Theory of Mind"</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
@@ -1034,45 +1032,45 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb33-50"><a href="#cb33-50" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-51"><a href="#cb33-51" aria-hidden="true" tabindex="-1"></a>The goal of this demo is to offer very preliminary insight into how models developed in cognitive science to understand how *people* learn and decide efficiently and (in most cases) accurately, can be used to both make AI systems learn better, by allowing them to make assumptions about how data is generated, as well as track the mental states and behavior of the user/analyst.</span>
 <span id="cb33-52"><a href="#cb33-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-53"><a href="#cb33-53" aria-hidden="true" tabindex="-1"></a><span class="fu"># Setup Hypothesis Space</span></span>
+<span id="cb33-53"><a href="#cb33-53" aria-hidden="true" tabindex="-1"></a><span class="fu"># Scenario: program the model's inference based on intel about the informant</span></span>
 <span id="cb33-54"><a href="#cb33-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-55"><a href="#cb33-55" aria-hidden="true" tabindex="-1"></a>We begin by defining a simple 2D grid and generating all possible rectangular hypotheses. Each hypothesis corresponds to a possible hidden area that an informant might be trying to convey.</span>
+<span id="cb33-55"><a href="#cb33-55" aria-hidden="true" tabindex="-1"></a>In this scenario, we assume have information that allows us to infer how much to trust the informant, which we can program into the model. In practice, this could be derived from the informant's track record of providing reliable data, their qualifications, conflicts of interests (or lack thereof), just to name a few. </span>
 <span id="cb33-56"><a href="#cb33-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-59"><a href="#cb33-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb33-60"><a href="#cb33-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Define grid size (H) and create 2D grid points for hypotheses and observation points</span></span>
-<span id="cb33-61"><a href="#cb33-61" aria-hidden="true" tabindex="-1"></a>H <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb33-62"><a href="#cb33-62" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>H</span>
-<span id="cb33-63"><a href="#cb33-63" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>H</span>
-<span id="cb33-64"><a href="#cb33-64" aria-hidden="true" tabindex="-1"></a>pts_x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, H <span class="sc">-</span> <span class="fl">0.5</span>, <span class="dv">1</span>)</span>
-<span id="cb33-65"><a href="#cb33-65" aria-hidden="true" tabindex="-1"></a>pts_y <span class="ot">&lt;-</span> pts_x</span>
-<span id="cb33-66"><a href="#cb33-66" aria-hidden="true" tabindex="-1"></a>pts <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> pts_x, <span class="at">y =</span> pts_y)</span>
-<span id="cb33-67"><a href="#cb33-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-68"><a href="#cb33-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate all possible rectangular hypotheses with borders</span></span>
-<span id="cb33-69"><a href="#cb33-69" aria-hidden="true" tabindex="-1"></a>hyp <span class="ot">&lt;-</span> <span class="fu">makeBorders</span>(x, y)</span>
-<span id="cb33-70"><a href="#cb33-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-71"><a href="#cb33-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize uniform prior probability for each hypothesis -- this could be tweaked for different scenarios</span></span>
-<span id="cb33-72"><a href="#cb33-72" aria-hidden="true" tabindex="-1"></a>hyp<span class="sc">$</span>prior <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fl">0.1</span>, <span class="fu">nrow</span>(hyp))</span>
-<span id="cb33-73"><a href="#cb33-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-74"><a href="#cb33-74" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign unique rectangle IDs for tracking</span></span>
-<span id="cb33-75"><a href="#cb33-75" aria-hidden="true" tabindex="-1"></a>hyp<span class="sc">$</span>rect_id <span class="ot">&lt;-</span> <span class="fu">rownames</span>(hyp)</span>
-<span id="cb33-76"><a href="#cb33-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-77"><a href="#cb33-77" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract only border coordinates for easier plotting/processing</span></span>
-<span id="cb33-78"><a href="#cb33-78" aria-hidden="true" tabindex="-1"></a>justHyp <span class="ot">&lt;-</span> hyp[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
-<span id="cb33-79"><a href="#cb33-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-80"><a href="#cb33-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb33-81"><a href="#cb33-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-82"><a href="#cb33-82" aria-hidden="true" tabindex="-1"></a><span class="fu">### Plot all possible hypotheses</span></span>
+<span id="cb33-57"><a href="#cb33-57" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setup Hypothesis Space</span></span>
+<span id="cb33-58"><a href="#cb33-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-59"><a href="#cb33-59" aria-hidden="true" tabindex="-1"></a>We begin by defining a simple 2D grid and generating all possible rectangular hypotheses. Each hypothesis corresponds to a possible hidden area that an informant might be trying to convey.</span>
+<span id="cb33-60"><a href="#cb33-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-63"><a href="#cb33-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-64"><a href="#cb33-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Define grid size (H) and create 2D grid points for hypotheses and observation points</span></span>
+<span id="cb33-65"><a href="#cb33-65" aria-hidden="true" tabindex="-1"></a>H <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb33-66"><a href="#cb33-66" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>H</span>
+<span id="cb33-67"><a href="#cb33-67" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>H</span>
+<span id="cb33-68"><a href="#cb33-68" aria-hidden="true" tabindex="-1"></a>pts_x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, H <span class="sc">-</span> <span class="fl">0.5</span>, <span class="dv">1</span>)</span>
+<span id="cb33-69"><a href="#cb33-69" aria-hidden="true" tabindex="-1"></a>pts_y <span class="ot">&lt;-</span> pts_x</span>
+<span id="cb33-70"><a href="#cb33-70" aria-hidden="true" tabindex="-1"></a>pts <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> pts_x, <span class="at">y =</span> pts_y)</span>
+<span id="cb33-71"><a href="#cb33-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-72"><a href="#cb33-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate all possible rectangular hypotheses with borders</span></span>
+<span id="cb33-73"><a href="#cb33-73" aria-hidden="true" tabindex="-1"></a>hyp <span class="ot">&lt;-</span> <span class="fu">makeBorders</span>(x, y)</span>
+<span id="cb33-74"><a href="#cb33-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-75"><a href="#cb33-75" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize uniform prior probability for each hypothesis -- this could be tweaked for different scenarios</span></span>
+<span id="cb33-76"><a href="#cb33-76" aria-hidden="true" tabindex="-1"></a>hyp<span class="sc">$</span>prior <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fl">0.1</span>, <span class="fu">nrow</span>(hyp))</span>
+<span id="cb33-77"><a href="#cb33-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-78"><a href="#cb33-78" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign unique rectangle IDs for tracking</span></span>
+<span id="cb33-79"><a href="#cb33-79" aria-hidden="true" tabindex="-1"></a>hyp<span class="sc">$</span>rect_id <span class="ot">&lt;-</span> <span class="fu">rownames</span>(hyp)</span>
+<span id="cb33-80"><a href="#cb33-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-81"><a href="#cb33-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract only border coordinates for easier plotting/processing</span></span>
+<span id="cb33-82"><a href="#cb33-82" aria-hidden="true" tabindex="-1"></a>justHyp <span class="ot">&lt;-</span> hyp[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
 <span id="cb33-83"><a href="#cb33-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-84"><a href="#cb33-84" aria-hidden="true" tabindex="-1"></a>This plot shows the full hypothesis space — all possible areas that the informant could be trying to convey in the grid.</span>
+<span id="cb33-84"><a href="#cb33-84" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb33-85"><a href="#cb33-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-86"><a href="#cb33-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r out.width=1000}</span></span>
-<span id="cb33-87"><a href="#cb33-87" aria-hidden="true" tabindex="-1"></a><span class="in"># Plot the entire hypothesis space to visualize all possible rectangles</span></span>
-<span id="cb33-88"><a href="#cb33-88" aria-hidden="true" tabindex="-1"></a><span class="in">plotEmptyHypotheses(hyp)</span></span>
-<span id="cb33-89"><a href="#cb33-89" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb33-90"><a href="#cb33-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-91"><a href="#cb33-91" aria-hidden="true" tabindex="-1"></a><span class="fu"># Scenario: program the model's inference based on intel about the informant</span></span>
-<span id="cb33-92"><a href="#cb33-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-93"><a href="#cb33-93" aria-hidden="true" tabindex="-1"></a>In this scenario, we assume have information that allows us to infer how much to trust the informant, which we can program into the model. In practice, this could be derived from the informant's track record of providing reliable data, their qualifications, conflicts of interests (or lack thereof), just to name a few. </span>
+<span id="cb33-86"><a href="#cb33-86" aria-hidden="true" tabindex="-1"></a><span class="fu">### Plot all possible hypotheses</span></span>
+<span id="cb33-87"><a href="#cb33-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-88"><a href="#cb33-88" aria-hidden="true" tabindex="-1"></a>This plot shows the full hypothesis space — all possible areas that the informant could be trying to convey in the grid.</span>
+<span id="cb33-89"><a href="#cb33-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-90"><a href="#cb33-90" aria-hidden="true" tabindex="-1"></a><span class="in">```{r out.width=1000}</span></span>
+<span id="cb33-91"><a href="#cb33-91" aria-hidden="true" tabindex="-1"></a><span class="in"># Plot the entire hypothesis space to visualize all possible rectangles</span></span>
+<span id="cb33-92"><a href="#cb33-92" aria-hidden="true" tabindex="-1"></a><span class="in">plotEmptyHypotheses(hyp)</span></span>
+<span id="cb33-93"><a href="#cb33-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb33-94"><a href="#cb33-94" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-95"><a href="#cb33-95" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 1: Define how much the model should trust the informant</span></span>
 <span id="cb33-96"><a href="#cb33-96" aria-hidden="true" tabindex="-1"></a></span>
@@ -1109,7 +1107,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb33-131"><a href="#cb33-131" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-132"><a href="#cb33-132" aria-hidden="true" tabindex="-1"></a>Now we'll simulate how different informants provide clues and how the model updates its beliefs.</span>
 <span id="cb33-133"><a href="#cb33-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-134"><a href="#cb33-134" aria-hidden="true" tabindex="-1"></a><span class="fu"># Step 3: The informant provides clues</span></span>
+<span id="cb33-134"><a href="#cb33-134" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 3: The informant provides clues</span></span>
 <span id="cb33-135"><a href="#cb33-135" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-138"><a href="#cb33-138" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb33-139"><a href="#cb33-139" aria-hidden="true" tabindex="-1"></a><span class="co"># Select 2 random points as clues from the grid for the demo</span></span>
@@ -1133,7 +1131,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb33-157"><a href="#cb33-157" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-158"><a href="#cb33-158" aria-hidden="true" tabindex="-1"></a>For simplicity, assume the informant cannot lie (as detailed in my paper, this is often a realistic assumption). This means the rectangles consistent with the clues are the only possible true rectangles.</span>
 <span id="cb33-159"><a href="#cb33-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-160"><a href="#cb33-160" aria-hidden="true" tabindex="-1"></a><span class="fu"># Step 4: Model updates its beliefs based on the clues</span></span>
+<span id="cb33-160"><a href="#cb33-160" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 4: Model updates its beliefs based on the clues</span></span>
 <span id="cb33-161"><a href="#cb33-161" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-162"><a href="#cb33-162" aria-hidden="true" tabindex="-1"></a>Now that we have the clues, we can update the model's beliefs about the true rectangle. The model will calculate the posterior probabilities of each hypothesis given the clues it has seen and how much it trusts the informant.</span>
 <span id="cb33-163"><a href="#cb33-163" aria-hidden="true" tabindex="-1"></a></span>
@@ -1183,7 +1181,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb33-211"><a href="#cb33-211" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-212"><a href="#cb33-212" aria-hidden="true" tabindex="-1"></a>Second the plots show us how, using these models, we can get not just a recommendation for what the most likely hypothesis is, but also how confident the model is about that recomendation. This is a key strength of Bayesian inference, as it naturally calculates the probability of every choice alternative, therefore providing the analyst more information to make their own inference.</span>
 <span id="cb33-213"><a href="#cb33-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-214"><a href="#cb33-214" aria-hidden="true" tabindex="-1"></a><span class="fu"># Step 5: Analyst makes their own inference based on the clue</span></span>
+<span id="cb33-214"><a href="#cb33-214" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 5: Analyst makes their own inference based on the clue</span></span>
 <span id="cb33-215"><a href="#cb33-215" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-216"><a href="#cb33-216" aria-hidden="true" tabindex="-1"></a>Another advantage of this type of models is that it can not only make recommendations to a human analyst, but it can also monitor the analyst's decisions and give feedback on the quality of their inferences. Let's examine such a scenario, specifically, one where the model severely over-trusts the informant based on the informant's actual reliability: </span>
 <span id="cb33-217"><a href="#cb33-217" aria-hidden="true" tabindex="-1"></a></span>
@@ -1209,7 +1207,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb33-239"><a href="#cb33-239" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-240"><a href="#cb33-240" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb33-241"><a href="#cb33-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-242"><a href="#cb33-242" aria-hidden="true" tabindex="-1"></a><span class="fu"># Step 6: Model provides feedback on the analyst's guess</span></span>
+<span id="cb33-242"><a href="#cb33-242" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 6: Model provides feedback on the analyst's guess</span></span>
 <span id="cb33-243"><a href="#cb33-243" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-246"><a href="#cb33-246" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb33-247"><a href="#cb33-247" aria-hidden="true" tabindex="-1"></a>analyst_trust <span class="ot">&lt;-</span> <span class="dv">3</span></span>
@@ -1267,7 +1265,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb33-301"><a href="#cb33-301" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-302"><a href="#cb33-302" aria-hidden="true" tabindex="-1"></a>Looking forward, there are exciting opportunities to extend this approach beyond the demo context and apply it to real-world decision-making environments. At a company like Maincode, this framework could be developed into powerful AI tools that work in tandem with human users—helping analysts, operators, or domain experts interpret ambiguous data, weigh competing sources of information, and make high-stakes decisions with calibrated confidence.</span>
 <span id="cb33-303"><a href="#cb33-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-304"><a href="#cb33-304" aria-hidden="true" tabindex="-1"></a>For instance, a deployed version of this system could be used to support analysts in national security, medicine, finance, or policy—any domain where recommendations from diverse sources must be weighed under uncertainty. The system could track how much trust to place in different sources over time, detect when a user is becoming over- or under-confident, and provide transparent feedback to help improve human judgment. Importantly, this is not about replacing human reasoning, but about scaffolding it: using AI to support, amplify, and sharpen our cognitive capacities.</span>
+<span id="cb33-304"><a href="#cb33-304" aria-hidden="true" tabindex="-1"></a>For instance, a deployed version of this system could be used to support analysts in national security, medicine, finance, or policy: any domain where recommendations from diverse sources must be weighed under uncertainty. The system could track how much trust to place in different sources over time, detect when a user is becoming over- or under-confident, and provide transparent feedback to help improve human judgment. Importantly, this is not about replacing human reasoning, but about scaffolding it: using AI to support, amplify, and sharpen our cognitive capacities.</span>
 <span id="cb33-305"><a href="#cb33-305" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-306"><a href="#cb33-306" aria-hidden="true" tabindex="-1"></a>This kind of human-centered AI is not only technically feasible but urgently needed—and I'd be excited to help build it.</span>
 <span id="cb33-307"><a href="#cb33-307" aria-hidden="true" tabindex="-1"></a></span>
