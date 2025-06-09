@@ -292,3 +292,132 @@ samplePoint <- function(pts, size = 2) {
   point <- cbind(index = index, pts[index, ], category = sign)
   point
 }
+
+#' Update posterior distribution over hypotheses based on new observed points
+#'
+#' Given new observations, this function updates the posterior distribution
+#' over a set of rectangle hypotheses using precomputed likelihoods for
+#' positive and negative evidence.
+#'
+#' @param new_pts A dataframe of new observed points. Must include:
+#'   \itemize{
+#'     \item \code{index}: Row index of the point in the likelihood matrix
+#'     \item \code{category}: Either "positive" or "negative"
+#'   }
+#' @param likelihoods A named list with elements `"positive"` and `"negative"`,
+#'   each a matrix of likelihoods (points × hypotheses).
+#' @param hyp A dataframe of hypotheses. Must contain:
+#'   \itemize{
+#'     \item \code{prior}: Prior probability of each hypothesis
+#'   }
+#'
+#' @return A dataframe of updated hypotheses with posterior probabilities.
+#'   Hypotheses with zero posterior are removed.
+getHypDist <- function(new_pts, likelihoods, hyp) {
+  # Start with prior distribution
+  posterior <- hyp$prior
+  
+  # Multiply in the likelihood of each new observation
+  for (i in 1:nrow(new_pts)) {
+    category <- new_pts[i, "category"]
+    hyp_probs <- likelihoods[[category]][new_pts[i, "index"], ]
+    posterior <- posterior * hyp_probs
+  }
+  
+  # Normalize to get a proper probability distribution
+  posterior <- posterior / sum(posterior)
+  
+  # Update hypothesis dataframe
+  hyp$posterior <- posterior
+  
+  # Remove hypotheses with zero posterior
+  hyp <- hyp[hyp$posterior != 0, ]
+  
+  return(hyp)
+}
+
+#' Calculate normalized likelihoods for a given category
+#'
+#' Computes the normalized likelihood of each hypothesis given observed points
+#' and a specified category (e.g., "pos" or "neg"), using a reliability parameter `alpha`.
+#'
+#' @param hyp Data frame of hypotheses (rectangles).
+#' @param pts Data frame of observed points.
+#' @param category A string, either "pos" (positive) or "neg" (negative).
+#' @param alpha Numeric trust parameter determining the strength of the informant's signal.
+#'
+#' @return A normalized numeric matrix of likelihoods for each hypothesis.
+#' @export
+calculate_normalized_likelihoods <- function(hyp, pts, category, alpha) {
+  likelihood <- findProbabilityOfPoints(hyp, pts, category, alpha = alpha)
+  likelihood <- data.matrix(likelihood / sum(likelihood))
+  return(likelihood)
+}
+
+#' Compute likelihoods for both point categories
+#'
+#' Wrapper that returns normalized likelihoods for both positive and negative points,
+#' given a single reliability parameter.
+#'
+#' @param hyp Data frame of hypotheses.
+#' @param pts Data frame of observed points.
+#' @param alpha Numeric trust parameter for the informant.
+#'
+#' @return A named list with "positive" and "negative" likelihood matrices.
+#' @export
+compute_likelihoods_for_informant <- function(hyp, pts, alpha) {
+  list(
+    positive = calculate_normalized_likelihoods(hyp, pts, "pos", alpha),
+    negative = calculate_normalized_likelihoods(hyp, pts, "neg", alpha)
+  )
+}
+
+#' Update posterior beliefs based on clues and likelihoods
+#'
+#' Combines prior hypotheses with the given clues and category likelihoods
+#' to generate a posterior distribution over hypotheses.
+#'
+#' @param clues Data frame of observed points with associated categories.
+#' @param likelihoods A list of likelihood matrices for each category.
+#' @param hyp Data frame of prior hypotheses with columns `x1`, `x2`, `y1`, `y2`.
+#'
+#' @return A data frame of hypotheses with updated posterior probabilities.
+#' @export
+update_hypotheses_posterior <- function(clues, likelihoods, hyp) {
+  getHypDist(clues, likelihoods, hyp)
+}
+
+#' Plot posterior probabilities over hypotheses
+#'
+#' Creates a bar plot visualizing the posterior probabilities for each hypothesis.
+#'
+#' @param hypotheses Data frame containing at least `rect_id` and `posterior` columns.
+#' @param color A string indicating the fill color for the bars.
+#' @param title A string to display as the plot title.
+#'
+#' @return A `ggplot2` object.
+#' @export
+plot_posterior_probabilities <- function(hypotheses, color, title) {
+  ggplot(hypotheses, aes(x = rect_id, y = posterior)) +
+    geom_bar(stat = "identity", fill = color) +
+    labs(title = title, x = "Hypothesis", y = "Probability") +
+    theme_minimal() +
+    scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+}
+
+#' Extract the top hypothesis and confidence score
+#'
+#' Identifies the hypothesis with the highest posterior probability and computes
+#' a confidence score relative to chance.
+#'
+#' @param hypotheses A data frame of hypotheses with posterior probabilities.
+#'
+#' @return A list with the best rectangle ID and a numeric confidence score.
+#' @export
+get_recommendation_and_confidence <- function(hypotheses) {
+  chance <- 1 / nrow(hypotheses)
+  recommended <- hypotheses[which.max(hypotheses$posterior), ]
+  confidence <- recommended[,"posterior"] - chance
+  list(rectangle = rownames(recommended), confidence = confidence)
+}
