@@ -2,7 +2,7 @@
 
 This is a minimal demonstration of how Bayesian Theory of Mind (Bayes-TOM) models can be used to support human decision-making. The demo shows how a model can infer the location of a hidden rectangle based on clues provided by an informant, and how this inference changes depending on assumptions about the informant's helpfulness.
 
-It also illustrates how a model can generate recommendations, compare them to a human analyst’s decision, and provide feedback about calibration.
+It also illustrates how a model can generate recommendations, compare them to a human analyst's decision, and provide feedback about calibration.
 
 ---
 
