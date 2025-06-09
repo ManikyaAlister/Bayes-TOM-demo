@@ -8,6 +8,8 @@ It also illustrates how a model can generate recommendations, compare them to a 
 
 ## Files
 
+I have integrated the design report and code into a single Quarto document rendered to HTML for easy viewing. See below the specific files contained in the repo: 
+
 - `Bayes-TOM-demo.qmd`: The main Quarto source file (includes code and narrative).
 - `Bayes-TOM-demo.html`: The rendered HTML output. Open this to view the demo without running code.
 - `Bayes-TOM-demo_files`: Various files that are saved when rendering the quarto doc. 
