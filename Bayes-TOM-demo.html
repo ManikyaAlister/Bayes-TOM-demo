@@ -163,7 +163,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>pts <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> pts_x, <span class="at">y =</span> pts_y)</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate all possible rectangular hypotheses with borders</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>hyp <span class="ot">&lt;-</span> <span class="fu">makeBorders</span>(x, y)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>hyp <span class="ot">&lt;-</span> <span class="fu">make_borders</span>(x, y)</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize uniform prior probability for each hypothesis -- this could be tweaked for different scenarios</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>hyp<span class="sc">$</span>prior <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fl">0.1</span>, <span class="fu">nrow</span>(hyp))</span>
@@ -182,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <details class="code-fold">
 <summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the entire hypothesis space to visualize all possible rectangles</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotEmptyHypotheses</span>(hyp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_empty_hypotheses</span>(hyp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -225,7 +225,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  likelihoods <span class="ot">&lt;-</span> <span class="fu">compute_likelihoods_for_informant</span>(hyp, pts, alpha)</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  all_likelihoods[[informant]] <span class="ot">&lt;-</span> likelihoods</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  plot <span class="ot">&lt;-</span> <span class="fu">plotMultiplePointPosteriors</span>(hyp, likelihoods<span class="sc">$</span>positive, <span class="at">yrange =</span> <span class="dv">0</span><span class="sc">:</span>H, <span class="at">xrange =</span> <span class="dv">0</span><span class="sc">:</span>H)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  plot <span class="ot">&lt;-</span> <span class="fu">plot_multiple_point_posteriors</span>(hyp, likelihoods<span class="sc">$</span>positive, <span class="at">yrange =</span> <span class="dv">0</span><span class="sc">:</span>H, <span class="at">xrange =</span> <span class="dv">0</span><span class="sc">:</span>H)</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  plot <span class="ot">&lt;-</span> <span class="fu">annotate_figure</span>(plot, <span class="at">top =</span> <span class="fu">paste0</span>(<span class="st">"Probability that an informant would choose different points in the grid assuming the informant is: "</span>, informant))</span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  all_plots[[informant]] <span class="ot">&lt;-</span> plot</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -240,7 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select 2 random points as clues from the grid for the demo</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>new_pts <span class="ot">&lt;-</span> <span class="fu">samplePoint</span>(pts)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>new_pts <span class="ot">&lt;-</span> <span class="fu">sample_points</span>(pts)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>new_pts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
@@ -284,9 +284,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (informant <span class="cf">in</span> <span class="fu">names</span>(all_likelihoods)) {</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  likelihoods <span class="ot">&lt;-</span> all_likelihoods[[informant]]</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  updated_hypotheses <span class="ot">&lt;-</span> <span class="fu">getHypDist</span>(new_pts, likelihoods, hyp)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  updated_hypotheses <span class="ot">&lt;-</span> <span class="fu">get_hyp_dist</span>(new_pts, likelihoods, hyp)</span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  updated_hypotheses_list[[informant]] <span class="ot">&lt;-</span> updated_hypotheses</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  plots_list[[informant]] <span class="ot">&lt;-</span> <span class="fu">plotEmptyHypotheses</span>(updated_hypotheses, new_pts)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  plots_list[[informant]] <span class="ot">&lt;-</span> <span class="fu">plot_empty_hypotheses</span>(updated_hypotheses, new_pts)</span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first informant's updated posterior plot</span></span>
@@ -384,14 +384,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The analyst uses their own trust parameter to compute likelihoods</span></span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>analyst_likelihoods <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"positive"</span> <span class="ot">=</span> <span class="fu">findProbabilityOfPoints</span>(hyp, pts, <span class="st">"pos"</span>, <span class="at">alpha =</span> analyst_trust),</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"negative"</span> <span class="ot">=</span> <span class="fu">findProbabilityOfPoints</span>(hyp, pts, <span class="st">"neg"</span>, <span class="at">alpha =</span> analyst_trust)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"positive"</span> <span class="ot">=</span> <span class="fu">find_probability_of_points</span>(hyp, pts, <span class="st">"pos"</span>, <span class="at">alpha =</span> analyst_trust),</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"negative"</span> <span class="ot">=</span> <span class="fu">find_probability_of_points</span>(hyp, pts, <span class="st">"neg"</span>, <span class="at">alpha =</span> analyst_trust)</span>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>analyst_likelihoods<span class="sc">$</span>positive <span class="ot">&lt;-</span> <span class="fu">data.matrix</span>(analyst_likelihoods<span class="sc">$</span>positive <span class="sc">/</span> <span class="fu">sum</span>(analyst_likelihoods<span class="sc">$</span>positive))</span>
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>analyst_likelihoods<span class="sc">$</span>negative <span class="ot">&lt;-</span> <span class="fu">data.matrix</span>(analyst_likelihoods<span class="sc">$</span>negative <span class="sc">/</span> <span class="fu">sum</span>(analyst_likelihoods<span class="sc">$</span>negative))</span>
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyst updates their beliefs based on the clues</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>analyst_hypotheses <span class="ot">&lt;-</span> <span class="fu">getHypDist</span>(new_pts, analyst_likelihoods, hyp)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>analyst_hypotheses <span class="ot">&lt;-</span> <span class="fu">get_hyp_dist</span>(new_pts, analyst_likelihoods, hyp)</span>
 <span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Show analyst's recommended rectangle and confidence</span></span>
 <span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>analyst_recommended <span class="ot">&lt;-</span> analyst_hypotheses[<span class="fu">which.max</span>(analyst_hypotheses<span class="sc">$</span>posterior), ]</span>
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"Analyst's choice: "</span>, <span class="fu">rownames</span>(analyst_recommended)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1050,7 +1050,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb33-70"><a href="#cb33-70" aria-hidden="true" tabindex="-1"></a>pts <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> pts_x, <span class="at">y =</span> pts_y)</span>
 <span id="cb33-71"><a href="#cb33-71" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-72"><a href="#cb33-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate all possible rectangular hypotheses with borders</span></span>
-<span id="cb33-73"><a href="#cb33-73" aria-hidden="true" tabindex="-1"></a>hyp <span class="ot">&lt;-</span> <span class="fu">makeBorders</span>(x, y)</span>
+<span id="cb33-73"><a href="#cb33-73" aria-hidden="true" tabindex="-1"></a>hyp <span class="ot">&lt;-</span> <span class="fu">make_borders</span>(x, y)</span>
 <span id="cb33-74"><a href="#cb33-74" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-75"><a href="#cb33-75" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize uniform prior probability for each hypothesis -- this could be tweaked for different scenarios</span></span>
 <span id="cb33-76"><a href="#cb33-76" aria-hidden="true" tabindex="-1"></a>hyp<span class="sc">$</span>prior <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fl">0.1</span>, <span class="fu">nrow</span>(hyp))</span>
@@ -1069,7 +1069,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb33-89"><a href="#cb33-89" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-90"><a href="#cb33-90" aria-hidden="true" tabindex="-1"></a><span class="in">```{r out.width=1000}</span></span>
 <span id="cb33-91"><a href="#cb33-91" aria-hidden="true" tabindex="-1"></a><span class="in"># Plot the entire hypothesis space to visualize all possible rectangles</span></span>
-<span id="cb33-92"><a href="#cb33-92" aria-hidden="true" tabindex="-1"></a><span class="in">plotEmptyHypotheses(hyp)</span></span>
+<span id="cb33-92"><a href="#cb33-92" aria-hidden="true" tabindex="-1"></a><span class="in">plot_empty_hypotheses(hyp)</span></span>
 <span id="cb33-93"><a href="#cb33-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb33-94"><a href="#cb33-94" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-95"><a href="#cb33-95" aria-hidden="true" tabindex="-1"></a><span class="fu">## Step 1: Define how much the model should trust the informant</span></span>
@@ -1098,7 +1098,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb33-122"><a href="#cb33-122" aria-hidden="true" tabindex="-1"></a>  likelihoods <span class="ot">&lt;-</span> <span class="fu">compute_likelihoods_for_informant</span>(hyp, pts, alpha)</span>
 <span id="cb33-123"><a href="#cb33-123" aria-hidden="true" tabindex="-1"></a>  all_likelihoods[[informant]] <span class="ot">&lt;-</span> likelihoods</span>
 <span id="cb33-124"><a href="#cb33-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-125"><a href="#cb33-125" aria-hidden="true" tabindex="-1"></a>  plot <span class="ot">&lt;-</span> <span class="fu">plotMultiplePointPosteriors</span>(hyp, likelihoods<span class="sc">$</span>positive, <span class="at">yrange =</span> <span class="dv">0</span><span class="sc">:</span>H, <span class="at">xrange =</span> <span class="dv">0</span><span class="sc">:</span>H)</span>
+<span id="cb33-125"><a href="#cb33-125" aria-hidden="true" tabindex="-1"></a>  plot <span class="ot">&lt;-</span> <span class="fu">plot_multiple_point_posteriors</span>(hyp, likelihoods<span class="sc">$</span>positive, <span class="at">yrange =</span> <span class="dv">0</span><span class="sc">:</span>H, <span class="at">xrange =</span> <span class="dv">0</span><span class="sc">:</span>H)</span>
 <span id="cb33-126"><a href="#cb33-126" aria-hidden="true" tabindex="-1"></a>  plot <span class="ot">&lt;-</span> <span class="fu">annotate_figure</span>(plot, <span class="at">top =</span> <span class="fu">paste0</span>(<span class="st">"Probability that an informant would choose different points in the grid assuming the informant is: "</span>, informant))</span>
 <span id="cb33-127"><a href="#cb33-127" aria-hidden="true" tabindex="-1"></a>  all_plots[[informant]] <span class="ot">&lt;-</span> plot</span>
 <span id="cb33-128"><a href="#cb33-128" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -1112,7 +1112,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb33-138"><a href="#cb33-138" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb33-139"><a href="#cb33-139" aria-hidden="true" tabindex="-1"></a><span class="co"># Select 2 random points as clues from the grid for the demo</span></span>
 <span id="cb33-140"><a href="#cb33-140" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb33-141"><a href="#cb33-141" aria-hidden="true" tabindex="-1"></a>new_pts <span class="ot">&lt;-</span> <span class="fu">samplePoint</span>(pts)</span>
+<span id="cb33-141"><a href="#cb33-141" aria-hidden="true" tabindex="-1"></a>new_pts <span class="ot">&lt;-</span> <span class="fu">sample_points</span>(pts)</span>
 <span id="cb33-142"><a href="#cb33-142" aria-hidden="true" tabindex="-1"></a>new_pts</span>
 <span id="cb33-143"><a href="#cb33-143" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-144"><a href="#cb33-144" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the selected clues on the grid with positive/negative coloring</span></span>
@@ -1142,9 +1142,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb33-170"><a href="#cb33-170" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-171"><a href="#cb33-171" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (informant <span class="cf">in</span> <span class="fu">names</span>(all_likelihoods)) {</span>
 <span id="cb33-172"><a href="#cb33-172" aria-hidden="true" tabindex="-1"></a>  likelihoods <span class="ot">&lt;-</span> all_likelihoods[[informant]]</span>
-<span id="cb33-173"><a href="#cb33-173" aria-hidden="true" tabindex="-1"></a>  updated_hypotheses <span class="ot">&lt;-</span> <span class="fu">getHypDist</span>(new_pts, likelihoods, hyp)</span>
+<span id="cb33-173"><a href="#cb33-173" aria-hidden="true" tabindex="-1"></a>  updated_hypotheses <span class="ot">&lt;-</span> <span class="fu">get_hyp_dist</span>(new_pts, likelihoods, hyp)</span>
 <span id="cb33-174"><a href="#cb33-174" aria-hidden="true" tabindex="-1"></a>  updated_hypotheses_list[[informant]] <span class="ot">&lt;-</span> updated_hypotheses</span>
-<span id="cb33-175"><a href="#cb33-175" aria-hidden="true" tabindex="-1"></a>  plots_list[[informant]] <span class="ot">&lt;-</span> <span class="fu">plotEmptyHypotheses</span>(updated_hypotheses, new_pts)</span>
+<span id="cb33-175"><a href="#cb33-175" aria-hidden="true" tabindex="-1"></a>  plots_list[[informant]] <span class="ot">&lt;-</span> <span class="fu">plot_empty_hypotheses</span>(updated_hypotheses, new_pts)</span>
 <span id="cb33-176"><a href="#cb33-176" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb33-177"><a href="#cb33-177" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-178"><a href="#cb33-178" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the first informant's updated posterior plot</span></span>
@@ -1192,14 +1192,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb33-224"><a href="#cb33-224" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-225"><a href="#cb33-225" aria-hidden="true" tabindex="-1"></a><span class="co"># The analyst uses their own trust parameter to compute likelihoods</span></span>
 <span id="cb33-226"><a href="#cb33-226" aria-hidden="true" tabindex="-1"></a>analyst_likelihoods <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb33-227"><a href="#cb33-227" aria-hidden="true" tabindex="-1"></a>  <span class="st">"positive"</span> <span class="ot">=</span> <span class="fu">findProbabilityOfPoints</span>(hyp, pts, <span class="st">"pos"</span>, <span class="at">alpha =</span> analyst_trust),</span>
-<span id="cb33-228"><a href="#cb33-228" aria-hidden="true" tabindex="-1"></a>  <span class="st">"negative"</span> <span class="ot">=</span> <span class="fu">findProbabilityOfPoints</span>(hyp, pts, <span class="st">"neg"</span>, <span class="at">alpha =</span> analyst_trust)</span>
+<span id="cb33-227"><a href="#cb33-227" aria-hidden="true" tabindex="-1"></a>  <span class="st">"positive"</span> <span class="ot">=</span> <span class="fu">find_probability_of_points</span>(hyp, pts, <span class="st">"pos"</span>, <span class="at">alpha =</span> analyst_trust),</span>
+<span id="cb33-228"><a href="#cb33-228" aria-hidden="true" tabindex="-1"></a>  <span class="st">"negative"</span> <span class="ot">=</span> <span class="fu">find_probability_of_points</span>(hyp, pts, <span class="st">"neg"</span>, <span class="at">alpha =</span> analyst_trust)</span>
 <span id="cb33-229"><a href="#cb33-229" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb33-230"><a href="#cb33-230" aria-hidden="true" tabindex="-1"></a>analyst_likelihoods<span class="sc">$</span>positive <span class="ot">&lt;-</span> <span class="fu">data.matrix</span>(analyst_likelihoods<span class="sc">$</span>positive <span class="sc">/</span> <span class="fu">sum</span>(analyst_likelihoods<span class="sc">$</span>positive))</span>
 <span id="cb33-231"><a href="#cb33-231" aria-hidden="true" tabindex="-1"></a>analyst_likelihoods<span class="sc">$</span>negative <span class="ot">&lt;-</span> <span class="fu">data.matrix</span>(analyst_likelihoods<span class="sc">$</span>negative <span class="sc">/</span> <span class="fu">sum</span>(analyst_likelihoods<span class="sc">$</span>negative))</span>
 <span id="cb33-232"><a href="#cb33-232" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-233"><a href="#cb33-233" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyst updates their beliefs based on the clues</span></span>
-<span id="cb33-234"><a href="#cb33-234" aria-hidden="true" tabindex="-1"></a>analyst_hypotheses <span class="ot">&lt;-</span> <span class="fu">getHypDist</span>(new_pts, analyst_likelihoods, hyp)</span>
+<span id="cb33-234"><a href="#cb33-234" aria-hidden="true" tabindex="-1"></a>analyst_hypotheses <span class="ot">&lt;-</span> <span class="fu">get_hyp_dist</span>(new_pts, analyst_likelihoods, hyp)</span>
 <span id="cb33-235"><a href="#cb33-235" aria-hidden="true" tabindex="-1"></a><span class="co"># Show analyst's recommended rectangle and confidence</span></span>
 <span id="cb33-236"><a href="#cb33-236" aria-hidden="true" tabindex="-1"></a>analyst_recommended <span class="ot">&lt;-</span> analyst_hypotheses[<span class="fu">which.max</span>(analyst_hypotheses<span class="sc">$</span>posterior), ]</span>
 <span id="cb33-237"><a href="#cb33-237" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"Analyst's choice: "</span>, <span class="fu">rownames</span>(analyst_recommended)))</span>

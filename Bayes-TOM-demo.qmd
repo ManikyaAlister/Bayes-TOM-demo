@@ -66,7 +66,7 @@ pts_y <- pts_x
 pts <- expand.grid(x = pts_x, y = pts_y)
 
 # Generate all possible rectangular hypotheses with borders
-hyp <- makeBorders(x, y)
+hyp <- make_borders(x, y)
 
 # Initialize uniform prior probability for each hypothesis -- this could be tweaked for different scenarios
 hyp$prior <- rep(0.1, nrow(hyp))
@@ -85,7 +85,7 @@ This plot shows the full hypothesis space — all possible areas that the inform
 
 ```{r out.width=1000}
 # Plot the entire hypothesis space to visualize all possible rectangles
-plotEmptyHypotheses(hyp)
+plot_empty_hypotheses(hyp)
 ```
 
 ## Step 1: Define how much the model should trust the informant
@@ -114,7 +114,7 @@ for (informant in names(informants)) {
   likelihoods <- compute_likelihoods_for_informant(hyp, pts, alpha)
   all_likelihoods[[informant]] <- likelihoods
 
-  plot <- plotMultiplePointPosteriors(hyp, likelihoods$positive, yrange = 0:H, xrange = 0:H)
+  plot <- plot_multiple_point_posteriors(hyp, likelihoods$positive, yrange = 0:H, xrange = 0:H)
   plot <- annotate_figure(plot, top = paste0("Probability that an informant would choose different points in the grid assuming the informant is: ", informant))
   all_plots[[informant]] <- plot
 }
@@ -128,7 +128,7 @@ Now we'll simulate how different informants provide clues and how the model upda
 ```{r}
 # Select 2 random points as clues from the grid for the demo
 set.seed(123)
-new_pts <- samplePoint(pts)
+new_pts <- sample_points(pts)
 new_pts
 
 # Visualize the selected clues on the grid with positive/negative coloring
@@ -158,9 +158,9 @@ plots_list <- list()
 
 for (informant in names(all_likelihoods)) {
   likelihoods <- all_likelihoods[[informant]]
-  updated_hypotheses <- getHypDist(new_pts, likelihoods, hyp)
+  updated_hypotheses <- get_hyp_dist(new_pts, likelihoods, hyp)
   updated_hypotheses_list[[informant]] <- updated_hypotheses
-  plots_list[[informant]] <- plotEmptyHypotheses(updated_hypotheses, new_pts)
+  plots_list[[informant]] <- plot_empty_hypotheses(updated_hypotheses, new_pts)
 }
 
 # Display the first informant's updated posterior plot
@@ -208,14 +208,14 @@ analyst <- "trusting"
 
 # The analyst uses their own trust parameter to compute likelihoods
 analyst_likelihoods <- list(
-  "positive" = findProbabilityOfPoints(hyp, pts, "pos", alpha = analyst_trust),
-  "negative" = findProbabilityOfPoints(hyp, pts, "neg", alpha = analyst_trust)
+  "positive" = find_probability_of_points(hyp, pts, "pos", alpha = analyst_trust),
+  "negative" = find_probability_of_points(hyp, pts, "neg", alpha = analyst_trust)
 )
 analyst_likelihoods$positive <- data.matrix(analyst_likelihoods$positive / sum(analyst_likelihoods$positive))
 analyst_likelihoods$negative <- data.matrix(analyst_likelihoods$negative / sum(analyst_likelihoods$negative))
 
 # Analyst updates their beliefs based on the clues
-analyst_hypotheses <- getHypDist(new_pts, analyst_likelihoods, hyp)
+analyst_hypotheses <- get_hyp_dist(new_pts, analyst_likelihoods, hyp)
 # Show analyst's recommended rectangle and confidence
 analyst_recommended <- analyst_hypotheses[which.max(analyst_hypotheses$posterior), ]
 print(paste0("Analyst's choice: ", rownames(analyst_recommended)))

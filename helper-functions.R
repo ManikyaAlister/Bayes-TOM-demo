@@ -6,7 +6,7 @@
 #'
 #' @param r A numeric vector of length 4 representing the rectangle coordinates (x1, y1, x2, y2).
 #' @return The area of the rectangle.
-findSize <- function (r) {
+find_size <- function (r) {
   (abs((r[1]-r[3]))*(abs(r[2]-r[4])))
 }
 
@@ -16,7 +16,7 @@ findSize <- function (r) {
 #' @param xrange A vector defining the x-axis grid range (default is 0:10).
 #' @param yrange A vector defining the y-axis grid range (default is 0:10).
 #' @return A dataframe where each row is a rectangle hypothesis including prior, size, and placeholders for posterior calculations.
-makeBorders = function(xrange=0:10,yrange=0:10){
+make_borders = function(xrange=0:10,yrange=0:10){
   
   # Create array with all possible rectangle coordinates within the range 
   borders = expand.grid(xrange,yrange,xrange,yrange)
@@ -43,7 +43,7 @@ makeBorders = function(xrange=0:10,yrange=0:10){
   nHyp <- nrow(borders)
   size <- rep(0,nHyp)
   for (i in 1:nHyp) {
-    size[i] <- findSize(c(borders[i,1],borders[i,2],borders[i,3],borders[i,4]))
+    size[i] <- find_size(c(borders[i,1],borders[i,2],borders[i,3],borders[i,4]))
   }
   negSize <- fullSize - size
   prior <- rep(1,nHyp)/nHyp
@@ -68,7 +68,7 @@ makeBorders = function(xrange=0:10,yrange=0:10){
 #' @param p A vector of length 2 representing a point (x, y).
 #' @param r A vector of length 4 representing a rectangle (x1, y1, x2, y2).
 #' @return TRUE if the point is inside the rectangle, otherwise FALSE.
-isInRectangle <- function (p,r) {
+is_in_rectangle <- function (p,r) {
   return (p[1]>=r[1] & p[1]<=r[3] & p[2]>=r[2] & p[2]<=r[4])
 }
 
@@ -80,7 +80,7 @@ isInRectangle <- function (p,r) {
 #' @param pts A dataframe of points (with x and y columns).
 #' @return A logical dataframe indicating for each point (row) whether it is inside each hypothesis (column).
 
-findConsistencyOfPoints = function(hyp,pts){
+find_consistency_of_points = function(hyp,pts){
   
   nHyp <- nrow(hyp)
   nPts <- nrow(pts)
@@ -90,7 +90,7 @@ findConsistencyOfPoints = function(hyp,pts){
   
   for (p in 1:nPts) {
     for (h in 1:nHyp) {
-      if (isInRectangle(c(pts[p,1],pts[p,2]),c(hyp$x1[h],hyp$y1[h],hyp$x2[h],hyp$y2[h]))) {
+      if (is_in_rectangle(c(pts[p,1],pts[p,2]),c(hyp$x1[h],hyp$y1[h],hyp$x2[h],hyp$y2[h]))) {
         consPt[p,h] <- TRUE
       } 
     }
@@ -113,7 +113,7 @@ findConsistencyOfPoints = function(hyp,pts){
 #' @param manual_scale Vector of length 2 setting manual fill scale limits.
 #' @return A ggplot object.
 
-plotColourfulDistribution = function(obs=NA, trueRectangle=c(0,0,0,0), allPts,
+plot_colourful_distribution = function(obs=NA, trueRectangle=c(0,0,0,0), allPts,
                                      xrange = 0:10, yrange=0:10,
                                      title="Sampling distribution", 
                                      subtitle="Yellow rectangle is the true hypothesis",
@@ -206,7 +206,7 @@ plotColourfulDistribution = function(obs=NA, trueRectangle=c(0,0,0,0), allPts,
 #' @param yrange Range of y-axis values (default 0:2).
 #' @param xrange Range of x-axis values (default 0:2).
 #' @return A combined ggplot of subplots.
-plotMultiplePointPosteriors <- function(hyp, point_probs, yrange = 0:2, xrange = 0:2) {
+plot_multiple_point_posteriors <- function(hyp, point_probs, yrange = 0:2, xrange = 0:2) {
   max_value <- max(point_probs)
   min_value <- min(point_probs)
   plot_list <- list()
@@ -214,7 +214,7 @@ plotMultiplePointPosteriors <- function(hyp, point_probs, yrange = 0:2, xrange =
     d_i <- cbind.data.frame(pts, posterior = point_probs[, i])
     rect <- hyp[i, 1:4]
     hyp_name <- colnames(point_probs)[i]
-    p <- plotColourfulDistribution(trueRectangle = rect, allPts = d_i, xrange = xrange, yrange = yrange, t = hyp_name, subtitle = NULL, manual_scale = c(min_value, max_value))
+    p <- plot_colourful_distribution(trueRectangle = rect, allPts = d_i, xrange = xrange, yrange = yrange, t = hyp_name, subtitle = NULL, manual_scale = c(min_value, max_value))
     plot_list[[i]] <- p
   }
   ggarrange(plotlist = plot_list)
@@ -230,7 +230,7 @@ plotMultiplePointPosteriors <- function(hyp, point_probs, yrange = 0:2, xrange =
 #' @param alpha Informativeness parameter: 0 (weak), 1 (helpful), -1 (deceptive).
 #' @return A dataframe of point probabilities for each hypothesis.
 
-findProbabilityOfPoints = function(hyp,pts,whichObs,alpha=0){
+find_probability_of_points = function(hyp,pts,whichObs,alpha=0){
   
   nHyp <- nrow(hyp)
   nPts <- nrow(pts)
@@ -240,7 +240,7 @@ findProbabilityOfPoints = function(hyp,pts,whichObs,alpha=0){
   
   for (p in 1:nPts) {
     for (h in 1:nHyp) {
-      if (isInRectangle(c(pts[p,1],pts[p,2]),c(hyp$x1[h],hyp$y1[h],hyp$x2[h],hyp$y2[h]))) {
+      if (is_in_rectangle(c(pts[p,1],pts[p,2]),c(hyp$x1[h],hyp$y1[h],hyp$x2[h],hyp$y2[h]))) {
         if (whichObs=="pos") {
           consPt[p,h] <- (1/hyp$size[h])^alpha
         } 
@@ -261,7 +261,7 @@ findProbabilityOfPoints = function(hyp,pts,whichObs,alpha=0){
 #' @param hyp Dataframe of hypotheses including x1, y1, x2, y2.
 #' @param pt Optional point dataframe with x, y, and category.
 #' @return A ggplot object.
-plotEmptyHypotheses <- function(hyp, pt = NULL) {
+plot_empty_hypotheses <- function(hyp, pt = NULL) {
   plot <- ggplot() +
     geom_rect(data = hyp, fill = "lightblue", color = "black", alpha = 0.7,
               aes(xmin = x1, xmax = x2, ymin = y1, ymax = y2)) +
@@ -284,7 +284,7 @@ plotEmptyHypotheses <- function(hyp, pt = NULL) {
 #' @param pts Dataframe of all possible points.
 #' @param size Number of points to sample (default = 2).
 #' @return A dataframe of sampled points with assigned category (positive or negative).
-samplePoint <- function(pts, size = 2) {
+sample_points <- function(pts, size = 2) {
   index <- sample(1:nrow(pts), size = size, replace = FALSE)
   # randomly assign a sign to the points
   # "positive" points are inside the rectangle, "negative" points are outside
@@ -313,7 +313,7 @@ samplePoint <- function(pts, size = 2) {
 #'
 #' @return A dataframe of updated hypotheses with posterior probabilities.
 #'   Hypotheses with zero posterior are removed.
-getHypDist <- function(new_pts, likelihoods, hyp) {
+get_hyp_dist <- function(new_pts, likelihoods, hyp) {
   # Start with prior distribution
   posterior <- hyp$prior
   
@@ -349,7 +349,7 @@ getHypDist <- function(new_pts, likelihoods, hyp) {
 #' @return A normalized numeric matrix of likelihoods for each hypothesis.
 #' @export
 calculate_normalized_likelihoods <- function(hyp, pts, category, alpha) {
-  likelihood <- findProbabilityOfPoints(hyp, pts, category, alpha = alpha)
+  likelihood <- find_probability_of_points(hyp, pts, category, alpha = alpha)
   likelihood <- data.matrix(likelihood / sum(likelihood))
   return(likelihood)
 }
@@ -384,7 +384,7 @@ compute_likelihoods_for_informant <- function(hyp, pts, alpha) {
 #' @return A data frame of hypotheses with updated posterior probabilities.
 #' @export
 update_hypotheses_posterior <- function(clues, likelihoods, hyp) {
-  getHypDist(clues, likelihoods, hyp)
+  get_hyp_dist(clues, likelihoods, hyp)
 }
 
 #' Plot posterior probabilities over hypotheses
