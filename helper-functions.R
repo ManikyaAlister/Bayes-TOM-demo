@@ -1,24 +1,21 @@
 # helper functions
 
-#' Function to find the size of each rectangle (necessary for strong sampling)
-#' 
-#' @param r vector of length 4. Coordinates of the rectangle
+#' Calculate the area (size) of a rectangle
+#'
+#' This function is used in strong sampling calculations.
+#'
+#' @param r A numeric vector of length 4 representing the rectangle coordinates (x1, y1, x2, y2).
+#' @return The area of the rectangle.
 findSize <- function (r) {
   (abs((r[1]-r[3]))*(abs(r[2]-r[4])))
 }
 
 
-#' Sets up all possible rectangles within a given hypothesis space 
-#' @param xrange vector describing the x axis (default 0:10)
-#' @param yrange vector describing the y axis (default 0:10)
-#' @return A dataframe where each row is one rectangle, 
-#' the column num is a unique identifier for each hypothesis
-#' the columns (x1,y1,x2,y2) are the coordinates 
-#' the column prior indicates the prior probability of that hypothesis (initially equal)
-#' nPos and nNeg will track the number of points of each, right now 0
-#' likePos and likeNeg are the likelihood of each of those things, right now 1
-#' consPos and consNeg are TRUE if the hypothsis is consistent with the pos/neg data
-#' posterior is the posterior, right now equal to prior
+#' Generate a hypothesis space of all rectangles within a grid
+#'
+#' @param xrange A vector defining the x-axis grid range (default is 0:10).
+#' @param yrange A vector defining the y-axis grid range (default is 0:10).
+#' @return A dataframe where each row is a rectangle hypothesis including prior, size, and placeholders for posterior calculations.
 makeBorders = function(xrange=0:10,yrange=0:10){
   
   # Create array with all possible rectangle coordinates within the range 
@@ -34,7 +31,7 @@ makeBorders = function(xrange=0:10,yrange=0:10){
   
   borders = borders[complete.cases(borders),] # delete any rows with NA (rows that previously held duplicate rectangles)
   
-  # replace rows where size = 0 with NA
+  # replace rows wherelinewidth = 0 with NA
   for (i in 1:length(borders[,1])){
     if (borders[i,1] == borders[i,3] | borders[i,2] == borders[i,4]) {
       borders[i,] = NA 
@@ -66,30 +63,22 @@ makeBorders = function(xrange=0:10,yrange=0:10){
   return(b)   
 }
 
-# **********************
-#     isInRectangle
-# **********************
-#' Function to figure out whether a certain observation is within a rectangle
-#' @param p vector of length 2. The point that you want to know is inside the rectangle or not
-#' @param r vector of length 4. Coordinates of the rectangle (x1,y1,x2,y2)
-#' @returns TRUE if in the rectangle, false if not
+#' Check whether a point lies within a rectangle
+#'
+#' @param p A vector of length 2 representing a point (x, y).
+#' @param r A vector of length 4 representing a rectangle (x1, y1, x2, y2).
+#' @return TRUE if the point is inside the rectangle, otherwise FALSE.
 isInRectangle <- function (p,r) {
   return (p[1]>=r[1] & p[1]<=r[3] & p[2]>=r[2] & p[2]<=r[4])
 }
 
 
 
-# ********************************
-#     findConsistencyOfPoints
-# ********************************
-#' Given a data frame with a set of points, returns a data frame where each row corresponds to a point
-#' and each column corresponds to a hypothesis. The cell is TRUE if that point
-#' is in that hypothesis and false if it is not
-#' @param hyp Data frame of hypotheses (each row is one, columns are x1,y1,x2,y2,prob)
-#' @param pts Data frame of points (each row is one, columns are x and y)
-#' @return A dataframe containing information about all points
-#' the rownames correspond to the points in pts
-#' the colnames correspond to the hypotheses in hyp
+#' Determine consistency of each point with each hypothesis
+#'
+#' @param hyp A dataframe of hypotheses (with x1, y1, x2, y2 columns).
+#' @param pts A dataframe of points (with x and y columns).
+#' @return A logical dataframe indicating for each point (row) whether it is inside each hypothesis (column).
 
 findConsistencyOfPoints = function(hyp,pts){
   
@@ -112,19 +101,17 @@ findConsistencyOfPoints = function(hyp,pts){
 }
 
 
-# ********************************
-#     plotColourfulDistribution
-# ********************************
-#' @title plotColourfulDistribution
-#' @description Like plotDistribution, except includes the probabilities of 
-#' things and also makes points red if they are negative and green if positive
-#' @param trueRectangle length 4 vector of true rectangle (default: none)
-#' @param obs observations to be plotted with it (default: none)
-#' @param allPts set of all of the points along with their probabilities 
-#' @param xrange vector describing the x axis (default 0:10)
-#' @param yrange vector describing the y axis (default 0:10)
-#' @param title character string for a title for the graph (default:"Sampling distribution")
-#' @param subtitle character string for a title for the graph (default:"Yellow rectangle is the true hypothesis")
+#' Plot probability distribution over grid with colored points
+#'
+#' @param obs Dataframe of observed points including x, y, index, and category.
+#' @param trueRectangle Vector of length 4 representing the true rectangle.
+#' @param allPts Dataframe of points with posterior values.
+#' @param xrange Vector for x-axis limits.
+#' @param yrange Vector for y-axis limits.
+#' @param title Plot title.
+#' @param subtitle Plot subtitle.
+#' @param manual_scale Vector of length 2 setting manual fill scale limits.
+#' @return A ggplot object.
 
 plotColourfulDistribution = function(obs=NA, trueRectangle=c(0,0,0,0), allPts,
                                      xrange = 0:10, yrange=0:10,
@@ -152,7 +139,7 @@ plotColourfulDistribution = function(obs=NA, trueRectangle=c(0,0,0,0), allPts,
           panel.grid.minor = element_line(size = 0.05, linetype = 'solid',
                                           colour = "black"),
           panel.background = element_rect(fill = "black", colour = "black",
-                                          size = 2, linetype = "solid")) +
+                                         linewidth = 2, linetype = "solid")) +
     labs(title=title, subtitle=subtitle)
   
   pRect <- pRect + 
@@ -192,17 +179,17 @@ plotColourfulDistribution = function(obs=NA, trueRectangle=c(0,0,0,0), allPts,
       nNeg <- sum(obs$category=="negative")
       if (nPos > 0 & nNeg > 0) {
         pRect <- pRect +
-          geom_point(data=obs, mapping=aes(x=x, y=y, color=category, shape=category), size=6,
+          geom_point(data=obs, mapping=aes(x=x, y=y, color=category, shape=category),linewidth=6,
                      show.legend=FALSE) +
           scale_shape_manual(values=c(4,19)) +
           scale_color_manual(values=c("#FF0000FF","#00A600"))
       } else if (nNeg > 0) {
         pRect <- pRect +
-          geom_point(data=obs, mapping=aes(x=x, y=y), color="white", shape=4, size=6,
+          geom_point(data=obs, mapping=aes(x=x, y=y), color="white", shape=4,linewidth=6,
                      show.legend=FALSE)        
       } else {
         pRect <- pRect +
-          geom_point(data=obs, mapping=aes(x=x, y=y), color="white", shape=19, size=6,
+          geom_point(data=obs, mapping=aes(x=x, y=y), color="white", shape=19,linewidth=6,
                      show.legend=FALSE)        
       }
     }
@@ -212,6 +199,13 @@ plotColourfulDistribution = function(obs=NA, trueRectangle=c(0,0,0,0), allPts,
 
 
 
+#' Plot posterior distributions for multiple hypotheses
+#'
+#' @param hyp A dataframe of hypotheses.
+#' @param point_probs A dataframe of point posterior probabilities for each hypothesis.
+#' @param yrange Range of y-axis values (default 0:2).
+#' @param xrange Range of x-axis values (default 0:2).
+#' @return A combined ggplot of subplots.
 plotMultiplePointPosteriors <- function(hyp, point_probs, yrange = 0:2, xrange = 0:2) {
   max_value <- max(point_probs)
   min_value <- min(point_probs)
@@ -228,20 +222,13 @@ plotMultiplePointPosteriors <- function(hyp, point_probs, yrange = 0:2, xrange =
 
 
 
-# ********************************
-#     findProbabilityOfPoints
-# ********************************
-#' Given a data frame with a set of points and another dataframe with a set of hypotheses
-#' with weights, returns a dataframe where each row corresponds to a point
-#' and each column corresponds to a hypothesis. The cell gives the probability
-#' of that point for that hypothesis, depending on alpha. 
-#' @param hyp Data frame of hypotheses (each row is one, columns are x1,y1,x2,y2,prob)
-#' @param pts Data frame of points (each row is one, columns are x and y)
-#' @param whichObs Says whether the points are positive or negative ("pos" or "neg")
-#' @param alpha If zero, this is weak. -1 is deceptive. 1 is helpful. default=0
-#' @return A dataframe containing information about all points
-#' the rownames correspond to the points in pts
-#' the colnames correspond to the hypotheses in hyp
+#' Compute observation probabilities for each hypothesis
+#'
+#' @param hyp A dataframe of hypotheses with weight attributes.
+#' @param pts A dataframe of observation points.
+#' @param whichObs Whether the observations are "pos" or "neg".
+#' @param alpha Informativeness parameter: 0 (weak), 1 (helpful), -1 (deceptive).
+#' @return A dataframe of point probabilities for each hypothesis.
 
 findProbabilityOfPoints = function(hyp,pts,whichObs,alpha=0){
   
@@ -269,5 +256,39 @@ findProbabilityOfPoints = function(hyp,pts,whichObs,alpha=0){
   return(consPt)
 }
 
+#' Plot all hypotheses as rectangles, optionally adding a point
+#'
+#' @param hyp Dataframe of hypotheses including x1, y1, x2, y2.
+#' @param pt Optional point dataframe with x, y, and category.
+#' @return A ggplot object.
+plotEmptyHypotheses <- function(hyp, pt = NULL) {
+  plot <- ggplot() +
+    geom_rect(data = hyp, fill = "lightblue", color = "black", alpha = 0.7,
+              aes(xmin = x1, xmax = x2, ymin = y1, ymax = y2)) +
+    scale_x_continuous(breaks = 0:H, minor_breaks = 0:H) +
+    scale_y_continuous(breaks = 0:H, minor_breaks = 0:H) +
+    coord_fixed() +
+    facet_wrap(~ rect_id) +
+    theme_minimal() +
+    labs(title = "All possible hypotheses", x = "X", y = "Y")
+  
+  if (!is.null(pt)) {
+    plot <- plot + geom_point(data = pt, aes(x = x, y = y,colour = category))+
+      scale_color_manual(values = c("positive" = "green", "negative" = "red")) 
+  }
+  plot
+}
 
-
+#' Sample a set of points with assigned categories
+#'
+#' @param pts Dataframe of all possible points.
+#' @param size Number of points to sample (default = 2).
+#' @return A dataframe of sampled points with assigned category (positive or negative).
+samplePoint <- function(pts, size = 2) {
+  index <- sample(1:nrow(pts), size = size, replace = FALSE)
+  # randomly assign a sign to the points
+  # "positive" points are inside the rectangle, "negative" points are outside
+  sign <- sample(c("positive", "negative"), size = size, replace = TRUE, prob = c(0.5, 0.5))
+  point <- cbind(index = index, pts[index, ], category = sign)
+  point
+}

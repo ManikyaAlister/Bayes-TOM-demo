@@ -57,16 +57,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="maincode-demo_files/libs/clipboard/clipboard.min.js"></script>
-<script src="maincode-demo_files/libs/quarto-html/quarto.js"></script>
-<script src="maincode-demo_files/libs/quarto-html/popper.min.js"></script>
-<script src="maincode-demo_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="maincode-demo_files/libs/quarto-html/anchor.min.js"></script>
-<link href="maincode-demo_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="maincode-demo_files/libs/quarto-html/quarto-syntax-highlighting-29e2c20b02301cfff04dc8050bf30c7e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="maincode-demo_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="maincode-demo_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="maincode-demo_files/libs/bootstrap/bootstrap-e19dc0c07aeef78048e587c3f1edba7a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="Bayes-TOM-demo_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Bayes-TOM-demo_files/libs/quarto-html/quarto.js"></script>
+<script src="Bayes-TOM-demo_files/libs/quarto-html/popper.min.js"></script>
+<script src="Bayes-TOM-demo_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Bayes-TOM-demo_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Bayes-TOM-demo_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Bayes-TOM-demo_files/libs/quarto-html/quarto-syntax-highlighting-29e2c20b02301cfff04dc8050bf30c7e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Bayes-TOM-demo_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Bayes-TOM-demo_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Bayes-TOM-demo_files/libs/bootstrap/bootstrap-e19dc0c07aeef78048e587c3f1edba7a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -99,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>here() starts at /Users/manikyaalister/Documents/Projects/RectangleWorld/maincode-demo</code></pre>
+<pre><code>here() starts at /Users/manikyaalister/Documents/Projects/RectangleWorld/Bayes-TOM-demo</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -127,17 +127,23 @@ tidyverse 1.3.2 ──</code></pre>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"helper-functions.R"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Maincode’s mission is to build AI that does not automate human cognition, but augments it. To achieve this mission, you need to be able to make systems that allow people to both 1) make the most of the strengths that different AI systems offer, but that 2) allow people to transparently evaluate the extent to which they should rely on AI in a given context.</p>
-<p>A serious problem with the most popular AI models is that they are both overconfident and do not permit any method for a user to neither evaluate the true confidence of the model, nor do they have any explicit system to evaluate how much a user might be accurately calibrating their decision-making given the model’s confidence.</p>
+<p>Maincode’s mission is to build AI that does not automate human cognition, but augments it. To achieve this mission, you need to be able to make systems that allow people to both 1) make the most of the strengths that different AI systems offer, but that 2) allow people to transparently evaluate the extent to which they should rely on AI in a given context. AI can also be improved by integrating what we know about how people are able to learn efficiently from other agents, and how they can use these agents to help them make decisions.</p>
+<p>A serious problem with the most popular AI models is that they are both overconfident and do not permit any method for a user to neither evaluate the true confidence of the model, nor do they have any explicit system to evaluate how much a user might be accurately calibrating their decision-making given the model’s confidence. They are also generally much less efficient than humans are at learning, requiring vastly more data to learn from than humans do. Cognitive science has developed a number of models that can help us understand how people learn efficiently from other agents, and how they can use these agents to help them make better and more efficient decisions. These models can be used to improve AI systems by allowing them to make assumptions about how data is generated, and track the mental states of the user relying on their recommendation, in order to ensure their reliance on the AI system is calibrated with their uncertainty.</p>
 <p>I am not an engineer – you know this, so hopefully it is no surprise when I say that my expertise is not in understanding the most efficient or effective ways to implement these systems. But what I do understand is human cognition. Specifically, I have a deep understanding of how and why people rely on other agents, like AI, to facilitate their decision-making. What I’m going to describe to you is a serious problem that I see in modern AI systems as it relates to helping people accurately and efficiently learn from (and with) AI agents.</p>
-<p>What I’m going to show you in this demo is an application of what are called Bayesian theory of mind models. These kinds of models are very powerful because they offer an explanation for how, by learning <em>from</em> other agents, people are able to learn so much more efficiently than even the best AI models (the amount of data an LLM is trained on is astronomically higher than what any human will see in their lifetime). I am specifically going to demonstrate these models on an <em>inductive learning</em> task: a task where the agent needs to learn from examples to infer some category or concept. For the sake of simplicity, I’m going to assume that you have some basic understanding of standard Bayesian inference, but you can have a look at the introduction of [my paper][https://osf.io/preprints/psyarxiv/vyw3t_v1] for a more detailed overview.</p>
-<p>The scenario that i’m going to demonstrate here is as follows: imagine you are playing a game where you need to guess the size and location of a rectangle given some clues that someone has provided for you. This is similar to .. [provide real world example]. The AI in this scenario also has access to the same clues and uses a Bayesian model to infer the most likely rectangle, depending on how competent it believes the clue-giver (informant) is. The model can not only provide its recommendation, but can also describe the uncertainty of its predictions and help the human judge whether they are relying on its recommendations appropriately.</p>
-<p>Although this demo is not going to present anything tremendously groundbreaking or transformative (I don’t think that’s what you’re asking for), it will offer very preliminary insight into how Bayesian models of reasoning developed in cognitive science to understand how <em>people</em> learn and decide can be used to both make AI systems learn quickly, by allowing them to make assumptions about how data is generated, and track the mental states of the user relying on their reccomendation, in order to ensure their reliance on the AI system is calibrated with their uncertainty.</p>
-<section id="setup-hypothesis-space" class="level2">
-<h2 class="anchored" data-anchor-id="setup-hypothesis-space">Setup Hypothesis Space</h2>
-<p>We begin by defining a simple 2D grid and generating all possible rectangular hypotheses. Each hypothesis represents a possible hidden rectangle that a informant could be trying to convey.</p>
+<p>What I’m going to show you in this demo is an application of what are called Bayesian theory of mind models. These kinds of models are very powerful because they offer an explanation for how, by learning <em>from</em> other agents, people are able to learn so much more efficiently than even the best AI models (the amount of data an LLM is trained on is astronomically higher than what any human will see in their lifetime). I am specifically going to demonstrate these models on an <em>inductive learning</em> task: a task where the agent needs to learn from examples to infer some category or concept. For the sake of simplicity, I’m going to assume that you have some basic understanding of standard Bayesian inference, but you can have a look at the introduction of <a href="https://osf.io/preprints/psyarxiv/vyw3t_v1">my paper</a> for a more detailed overview.</p>
+<p>The scenario that I’m going to demonstrate here is as follows: imagine you are playing a game where you need to guess the size and location of a rectangular area given some clues that someone has provided for you. The AI in this scenario also has access to the same clues and uses a Bayesian model to infer the most likely rectangle, depending on how competent and helpful it believes the clue-giver (informant) is. The model can not only provide its recommendation, but can also describe the uncertainty of its predictions and help the human judge whether they are relying on the AIs recommendations as well as the informant’s clues, appropriately.</p>
+<p>This basic inference game can easily by scaled up to a number of real-world decision-making scenarios:<br>
+- <strong>Power outage mapping</strong> An analyst is trying to guess which area of a city has lost power. They receive a few addresses from someone monitoring citizen reports, and need to infer the whole area of the outage based on the few reports that have been shown to them. These reports could have been chosen by a helpful informant who is deliberately choosing reports to help the analyst infer the outage area, or by an unreliable informant who is choosing reports at random.</p>
+<p>- <strong>Military surveillance</strong> A scout shares sightings of enemy equipment at a few points on a grid. The analyst’s task is to infer the enemy base location based on these clues.The scout could be helpful and reliable, or they could be unreliable and misleading (such as if they have been compromised).</p>
+<p>- <strong>Environmental hazard detection</strong> A team is trying to identify a contamination zone in a forest based on sensor readings from a few locations. The analyst must infer the extent of the contamination area based on these readings. Similar to above, there are many ways that the sensor readings could be chosen that affect the analyst’s ability to infer the contamination zone.</p>
+<p>- <strong>Crime scene analysis</strong> A detective receives witness reports of suspicious activity at various locations in a neighborhood. They need to infer the area where the crime occurred based on these reports. If the witness reports are potentially spurious or unreliable, the detective’s inference will be affected compared to if the reports are reliable and helpful.</p>
+<p>And many more. The point is that the model can be used to help people make decisions in a wide range of scenarios where they need to infer some hidden structure from a few clues, and where the trustworthiness of the informant is uncertain but can be inferred.</p>
+<p>The goal of this demo is to offer very preliminary insight into how models developed in cognitive science to understand how <em>people</em> learn and decide efficiently and (in most cases) accurately, can be used to both make AI systems learn better, by allowing them to make assumptions about how data is generated, as well as track the mental states and behaviour of the user/analyst.</p>
+<section id="setup-hypothesis-space" class="level1">
+<h1>Setup Hypothesis Space</h1>
+<p>We begin by defining a simple 2D grid and generating all possible rectangular hypotheses. Each hypothesis represents a possible hidden space that an informant could be trying to convey.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>H <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>H <span class="ot">&lt;-</span> <span class="dv">3</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>H</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>H</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>pts_x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, H <span class="sc">-</span> <span class="fl">0.5</span>, <span class="dv">1</span>)</span>
@@ -151,7 +157,7 @@ tidyverse 1.3.2 ──</code></pre>
 </div>
 <section id="plot-all-possible-hypotheses" class="level3">
 <h3 class="anchored" data-anchor-id="plot-all-possible-hypotheses">Plot all possible hypotheses</h3>
-<p>This plot shows the full hypothesis space — all possible rectangles over the grid.</p>
+<p>This plot shows the full hypothesis space — all possible areas that the informant could be trying to convey in the grid.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plotEmptyHypotheses <span class="ot">&lt;-</span> <span class="cf">function</span>(hyp, <span class="at">pt =</span> <span class="cn">NULL</span>) {</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
@@ -165,44 +171,48 @@ tidyverse 1.3.2 ──</code></pre>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"All possible hypotheses"</span>, <span class="at">x =</span> <span class="st">"X"</span>, <span class="at">y =</span> <span class="st">"Y"</span>)</span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(pt)) {</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    plot <span class="ot">&lt;-</span> plot <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> pt, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y))</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  plot</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plotEmptyHypotheses</span>(hyp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    plot <span class="ot">&lt;-</span> plot <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> pt, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y,<span class="at">colour =</span> category))<span class="sc">+</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"positive"</span> <span class="ot">=</span> <span class="st">"green"</span>, <span class="st">"negative"</span> <span class="ot">=</span> <span class="st">"red"</span>)) </span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  plot</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plotEmptyHypotheses</span>(hyp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="maincode-demo_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Bayes-TOM-demo_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="define-the-assumed-reliability-of-the-informant" class="level2">
-<h2 class="anchored" data-anchor-id="define-the-assumed-reliability-of-the-informant">Define the assumed reliability of the informant</h2>
-<p>These parameters define how the model perceives the informant’s ability. An alpha of &lt; 0 means that the model assumes the informant is trying to <em>minimise</em> their belief in the true hypothesis. In other words, that they’re tying to systematically mislead them. An alpha of &gt; 0 means that the provider is trying to <em>maximise</em> their belief in the true hypothesis (be helpful). An alpha of 0 means that clues are being chosen at random (they are unreliable).</p>
-<p>In this demo, I’ll define three kinds of possible informants. Helpful &amp; Unreliable (alpha = 0.1), Helpful &amp; Reliable (alpha = 2), completely misleading (alpha = -2).</p>
+<section id="scenario-program-the-models-inference-based-on-intel-about-the-informant" class="level1">
+<h1>Scenario: program the model’s inference based on intel about the informant</h1>
+<p>In this scenario, we will imagine that we have some assumptions about how much we want to trust an informant, which we can then program into the model. This feature is especially useful in contexts where you do not have access to a model’s long-term reliability data with which to train a model, which is often the case in real-world applications. However, if you did have such data, you could easily have the model learn the informant’s reliability instead.</p>
+<section id="step-1-define-how-much-the-model-should-trust-the-informant" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-define-how-much-the-model-should-trust-the-informant">Step 1: Define how much the model should trust the informant</h2>
+<p>The model I am demonstrating today has a single parameter that defines how much the model trusts an informant. An alpha of &lt; 0 means that the model assumes the informant is trying to <em>minimise</em> their belief in the true hypothesis. In other words, that they’re tying to systematically mislead them. An alpha of &gt; 0 means that the informant is trying to <em>maximise</em> their belief in the true hypothesis (be helpful). An alpha of 0 means that clues are being chosen at random (they are unreliable).</p>
+<p>In this demo, I’ll define three kinds of possible informants. Helpful but unreliable (alpha = 0.1), helpful &amp; reliable (alpha = 2), and completely misleading (alpha = -2).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>providers <span class="ot">=</span> <span class="fu">c</span>(<span class="at">helpful =</span> <span class="dv">2</span>, <span class="at">unreliable =</span> <span class="fl">0.1</span>, <span class="at">misleading =</span> <span class="sc">-</span><span class="dv">2</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>providers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>informants <span class="ot">=</span> <span class="fu">c</span>(<span class="at">helpful =</span> <span class="dv">2</span>, <span class="at">unreliable =</span> <span class="fl">0.1</span>, <span class="at">misleading =</span> <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>informants</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   helpful unreliable misleading 
        2.0        0.1       -2.0 </code></pre>
 </div>
 </div>
 </section>
-<section id="step-1-the-model-calculates-how-probable-it-is-that-a-learer-would-choose-different-points-for-each-possible-hypothesis." class="level2">
-<h2 class="anchored" data-anchor-id="step-1-the-model-calculates-how-probable-it-is-that-a-learer-would-choose-different-points-for-each-possible-hypothesis.">Step 1: The model calculates how probable it is that a learer would choose different points for each possible hypothesis.</h2>
-<p>There are two kinds of clues a provider could choose: “positive” points that are inside of the true rectangle, and “negative” points, that are outside of the true rectangle. I won’t go into detail about how/why the model calculates the likelihood of different points given each possible rectangle (it’s statistical rule based on the size of each rectangle, such that in helpful contexts it assumes smaller rectangles consistent with positive points are more likely, and larger rectangles consistent with negative points are more likely), but again, refer to my paper linked earlier for more detail.</p>
+<section id="step-2-the-model-calculates-how-probable-it-is-that-a-learner-would-choose-different-points-for-each-possible-hypothesis." class="level2">
+<h2 class="anchored" data-anchor-id="step-2-the-model-calculates-how-probable-it-is-that-a-learner-would-choose-different-points-for-each-possible-hypothesis.">Step 2: The model calculates how probable it is that a learner would choose different points for each possible hypothesis.</h2>
+<p>There are two kinds of clues a informant could choose: “positive” points that are inside of the true rectangle, and “negative” points, that are outside of the true rectangle. I won’t go into detail about how/why the model calculates the likelihood of different points given each possible rectangle (it’s statistical rule based on the size of each rectangle, such that in helpful contexts it assumes smaller rectangles consistent with positive points are more likely, and larger rectangles consistent with negative points are more likely), but again, refer to my paper linked earlier for more detail.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>all_likelihoods <span class="ot">=</span> <span class="cn">NULL</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>all_plots <span class="ot">=</span> <span class="cn">NULL</span> </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(providers)){</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>informant_alpha <span class="ot">&lt;-</span> providers[i]</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>informant <span class="ot">&lt;-</span> <span class="fu">names</span>(providers)[i]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(informants)){</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>informant_alpha <span class="ot">&lt;-</span> informants[i]</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>informant <span class="ot">&lt;-</span> <span class="fu">names</span>(informants)[i]</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>ppp <span class="ot">&lt;-</span> <span class="fu">findProbabilityOfPoints</span>(hyp, pts, <span class="st">"pos"</span>, <span class="at">alpha =</span> informant_alpha)</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>ppp <span class="ot">&lt;-</span> <span class="fu">data.matrix</span>(ppp <span class="sc">/</span> <span class="fu">sum</span>(ppp))</span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>nnn <span class="ot">&lt;-</span> <span class="fu">findProbabilityOfPoints</span>(hyp, pts, <span class="st">"neg"</span>, <span class="at">alpha =</span> informant_alpha)</span>
@@ -226,197 +236,278 @@ tidyverse 1.3.2 ──</code></pre>
 ℹ Please use the `linewidth` argument instead.</code></pre>
 </div>
 </div>
-<section id="visualize-initial-likelihoods" class="level3">
-<h3 class="anchored" data-anchor-id="visualize-initial-likelihoods">Visualize Initial Likelihoods</h3>
-<p>Each panel shows the likelihood that a given point would be sampled by the informant assuming a specific rectangle is the true hypothesis. Higher values indicate more probable samples.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>all_plots</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>$helpful</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="maincode-demo_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-$unreliable</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="maincode-demo_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-$misleading</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="maincode-demo_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>The point of the above plot is to show that the model thinks the provider would be more likely to choose different points as a function of 1) what the true rectangle actually is, and 2) how helpful/reliable they are. This is how the model ultimately infers what the true rectangle is given some clues. ## Simulate informant Behavior and Model Inference</p>
-<p>Now we’ll simulate how different informants provide clues and how the model updates its beliefs. We’ll examine three scenarios: helpful, unreliable, and misleading informants.</p>
+<p>Now we’ll simulate how different informants provide clues and how the model updates its beliefs.</p>
 </section>
 </section>
-<section id="choose-clues" class="level1">
-<h1>Choose clues</h1>
+<section id="step-3-the-informant-provides-clues" class="level1">
+<h1>Step 3: The informant provides clues</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select 2 random points from in the grid</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>samplePoint <span class="ot">&lt;-</span> <span class="cf">function</span>(pts, <span class="at">size =</span> <span class="dv">2</span>) {</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  index <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(pts), <span class="at">size =</span> size, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># randomly assign a sign to the points</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># "positive" points are inside the rectangle, "negative" points are outside</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  sign <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"positive"</span>, <span class="st">"negative"</span>), <span class="at">size =</span> size, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>))</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  point <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">index =</span> index, pts[index, ], <span class="at">category =</span> sign)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  point</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>new_pts <span class="ot">&lt;-</span> <span class="fu">samplePoint</span>(pts)</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>new_pts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for the sake of this demo, let's just select 2 random points from in the grid</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>samplePoint <span class="ot">&lt;-</span> <span class="cf">function</span>(pts, <span class="at">size =</span> <span class="dv">2</span>) {</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  index <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(pts), <span class="at">size =</span> size, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># randomly assign a sign to the points</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># "positive" points are inside the rectangle, "negative" points are outside</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  sign <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"positive"</span>, <span class="st">"negative"</span>), <span class="at">size =</span> size, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>))</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  point <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">index =</span> index, pts[index, ], <span class="at">category =</span> sign)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  point</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>new_pts <span class="ot">&lt;-</span> <span class="fu">samplePoint</span>(pts)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>new_pts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  index   x   y category
-3     3 0.5 1.5 negative
-4     4 1.5 1.5 positive</code></pre>
+3     3 2.5 0.5 positive
+6     6 2.5 1.5 negative</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># visaulize the points</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="at">data =</span> hyp, <span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">xmin =</span> x1, <span class="at">xmax =</span> x2, <span class="at">ymin =</span> y1, <span class="at">ymax =</span> y2)) <span class="sc">+</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> new_pts, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> category), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">minor_breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">minor_breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"positive"</span> <span class="ot">=</span> <span class="st">"green"</span>, <span class="st">"negative"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Selected Points"</span>, <span class="at">x =</span> <span class="st">"X"</span>, <span class="at">y =</span> <span class="st">"Y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># visaulize the points</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rect</span>(<span class="at">data =</span> hyp, <span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">xmin =</span> x1, <span class="at">xmax =</span> x2, <span class="at">ymin =</span> y1, <span class="at">ymax =</span> y2)) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> new_pts, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">color =</span> category), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">minor_breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">minor_breaks =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"positive"</span> <span class="ot">=</span> <span class="st">"green"</span>, <span class="st">"negative"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Selected Points"</span>, <span class="at">x =</span> <span class="st">"X"</span>, <span class="at">y =</span> <span class="st">"Y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="maincode-demo_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Bayes-TOM-demo_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>For simplicity, let’s assume theat the informant cannot lie. This means that according to the clues, the rectangles depicted above are the only possible rectangles that could be the true rectangle.</p>
-<section id="step-2-model-updates-its-beliefs-based-on-the-clues" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-model-updates-its-beliefs-based-on-the-clues">Step 2: Model updates its beliefs based on the clues</h2>
-<p>Now that we have the clues, we can update the model’s beliefs about the true rectangle. The model will calculate the posterior probabilities of each hypothesis given the clues and its assumed reliability of the informant.</p>
+<p>For simplicity, let’s assume that the informant cannot lie (as I describe in my paper linked earlier, this is actually a pretty realistic assumption to make in most contexts). This assumption means that according to the clues, the rectangles depicted above are the only possible rectangles that could be the true rectangle.</p>
+</section>
+<section id="step-4-model-updates-its-beliefs-based-on-the-clues" class="level1">
+<h1>Step 4: Model updates its beliefs based on the clues</h1>
+<p>Now that we have the clues, we can update the model’s beliefs about the true rectangle. The model will calculate the posterior probabilities of each hypothesis given the clues it has seen and how much it trusts the informant.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>getHypDist <span class="ot">&lt;-</span> <span class="cf">function</span>(new_pts, likelihoods, hyp) {</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  posterior <span class="ot">&lt;-</span> hyp<span class="sc">$</span>prior</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(new_pts)) {</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    category <span class="ot">&lt;-</span> new_pts[i, <span class="st">"category"</span>]</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    hyp_probs <span class="ot">&lt;-</span> likelihoods[[category]][new_pts[i, <span class="st">"index"</span>], ]</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    posterior <span class="ot">&lt;-</span> posterior <span class="sc">*</span> hyp_probs</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  hyp<span class="sc">$</span>posterior <span class="ot">&lt;-</span> posterior <span class="sc">/</span> <span class="fu">sum</span>(posterior)</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  hyp[hyp<span class="sc">$</span>posterior <span class="sc">!=</span> <span class="dv">0</span>, ]</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>updated_hypotheses_list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>plots_list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (informant <span class="cf">in</span> <span class="fu">names</span>(all_likelihoods)) {</span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  likelihoods <span class="ot">&lt;-</span> all_likelihoods[[informant]]</span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>  updated_hypotheses <span class="ot">&lt;-</span> <span class="fu">getHypDist</span>(new_pts, likelihoods, hyp)</span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>  updated_hypotheses_list[[informant]] <span class="ot">&lt;-</span> updated_hypotheses</span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>  plots_list[[informant]] <span class="ot">&lt;-</span> <span class="fu">plotEmptyHypotheses</span>(updated_hypotheses, new_pts)</span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plots for each informant</span></span>
-<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>plots_list[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>getHypDist <span class="ot">&lt;-</span> <span class="cf">function</span>(new_pts, likelihoods, hyp) {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  posterior <span class="ot">&lt;-</span> hyp<span class="sc">$</span>prior</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(new_pts)) {</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    category <span class="ot">&lt;-</span> new_pts[i, <span class="st">"category"</span>]</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    hyp_probs <span class="ot">&lt;-</span> likelihoods[[category]][new_pts[i, <span class="st">"index"</span>], ]</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    posterior <span class="ot">&lt;-</span> posterior <span class="sc">*</span> hyp_probs</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  posterior <span class="ot">&lt;-</span> posterior <span class="sc">/</span> <span class="fu">sum</span>(posterior)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  hyp<span class="sc">$</span>posterior <span class="ot">&lt;-</span> posterior</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  hyp <span class="ot">&lt;-</span> hyp[hyp<span class="sc">$</span>posterior <span class="sc">!=</span> <span class="dv">0</span>, ]</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  hyp</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>updated_hypotheses_list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>plots_list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (informant <span class="cf">in</span> <span class="fu">names</span>(all_likelihoods)) {</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>  likelihoods <span class="ot">&lt;-</span> all_likelihoods[[informant]]</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>  updated_hypotheses <span class="ot">&lt;-</span> <span class="fu">getHypDist</span>(new_pts, likelihoods, hyp)</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>  updated_hypotheses_list[[informant]] <span class="ot">&lt;-</span> updated_hypotheses</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>  plots_list[[informant]] <span class="ot">&lt;-</span> <span class="fu">plotEmptyHypotheses</span>(updated_hypotheses, new_pts)</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plots for each informant</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>plots_list[[<span class="dv">1</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="maincode-demo_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Bayes-TOM-demo_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate whas chance confidence would be given how many eligible hypotheses there are that are consistent with thhe clues </span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>chance <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">nrow</span>(updated_hypotheses)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># define plot colours for different informants</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>plot_colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">helpful =</span> <span class="st">"darkgreen"</span>, <span class="at">unreliable =</span> <span class="st">"orange"</span>, <span class="at">misleading =</span> <span class="st">"red"</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># For each informant, plot posterior probabilities and show recommended rectangle</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (informant <span class="cf">in</span> <span class="fu">names</span>(updated_hypotheses_list)) {</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  updated_hypotheses <span class="ot">&lt;-</span> updated_hypotheses_list[[informant]]</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Bar plot of posterior probabilities</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(updated_hypotheses, <span class="fu">aes</span>(<span class="at">x =</span> rect_id, <span class="at">y =</span> posterior)) <span class="sc">+</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> plot_colours[informant]) <span class="sc">+</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">" Probabilities of hypotheses assuming the informant is **"</span>, informant, <span class="st">"**"</span>),</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">"Hypothesis"</span>, <span class="at">y =</span> <span class="st">"Probability"</span>) <span class="sc">+</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">accuracy =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Show recommended rectangle and its probability</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>  recommended_rect <span class="ot">&lt;-</span> updated_hypotheses[<span class="fu">which.max</span>(updated_hypotheses<span class="sc">$</span>posterior), ]</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"Assuming the informant is: "</span>, informant))</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"Recommended rectangle (most probable):"</span>)</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">rownames</span>(recommended_rect))</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"Confidence score: "</span>) <span class="co"># confidence score is the model posterior - chance, such that if the model is guessing, confidence is 0. </span></span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(recommended_rect[,<span class="st">"posterior"</span>] <span class="sc">-</span> chance)</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Bayes-TOM-demo_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Assuming the informant is: helpful"
+[1] "Recommended rectangle (most probable):"
+[1] "h6"
+[1] "Confidence score: "
+[1] 0.3228082</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Bayes-TOM-demo_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Assuming the informant is: unreliable"
+[1] "Recommended rectangle (most probable):"
+[1] "h6"
+[1] "Confidence score: "
+[1] 0.0153802</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Bayes-TOM-demo_files/figure-html/unnamed-chunk-8-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Assuming the informant is: misleading"
+[1] "Recommended rectangle (most probable):"
+[1] "h4"
+[1] "Confidence score: "
+[1] 0.2214612</code></pre>
+</div>
+</div>
+<p>The above plots show a few things. First, they show how the model can adjust its inferences based on what we tell it about the information provider: in this case, how much it should trust the clues it gives. Second the plots show us how, using these models, the we can get not just a recommendation for what the most likely hypothesis is, but also how confident the model is about that recomendation.</p>
+</section>
+<section id="step-5-analyst-makes-their-own-inference-based-on-the-clue" class="level1">
+<h1>Step 5: Analyst makes their own inference based on the clue</h1>
+<p>Another advantage of this type of models is that it can not only make recommendations to a human analyst, but it can also monitor the analyst’s decisions and give feedback on the quality of their inferences. Let’s examine such a scenario:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># model analyst guess assuming a particular alpha. Let's first assume that they are overly trusting: </span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>analyst_trust <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>analyst <span class="ot">&lt;-</span> <span class="st">"trusting"</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The analyst uses their own trust parameter to compute likelihoods</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>analyst_likelihoods <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"positive"</span> <span class="ot">=</span> <span class="fu">findProbabilityOfPoints</span>(hyp, pts, <span class="st">"pos"</span>, <span class="at">alpha =</span> analyst_trust),</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"negative"</span> <span class="ot">=</span> <span class="fu">findProbabilityOfPoints</span>(hyp, pts, <span class="st">"neg"</span>, <span class="at">alpha =</span> analyst_trust)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>analyst_likelihoods<span class="sc">$</span>positive <span class="ot">&lt;-</span> <span class="fu">data.matrix</span>(analyst_likelihoods<span class="sc">$</span>positive <span class="sc">/</span> <span class="fu">sum</span>(analyst_likelihoods<span class="sc">$</span>positive))</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>analyst_likelihoods<span class="sc">$</span>negative <span class="ot">&lt;-</span> <span class="fu">data.matrix</span>(analyst_likelihoods<span class="sc">$</span>negative <span class="sc">/</span> <span class="fu">sum</span>(analyst_likelihoods<span class="sc">$</span>negative))</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyst updates their beliefs based on the clues</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>analyst_hypotheses <span class="ot">&lt;-</span> <span class="fu">getHypDist</span>(new_pts, analyst_likelihoods, hyp)</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="co"># # Plot analyst's posterior</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(analyst_hypotheses, aes(x = rect_id, y = posterior)) +</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_bar(stat = "identity", fill = "blue") +</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="co">#   labs(title = paste0("Analyst's Posterior Probabilities (", analyst, ")"),</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="co">#        x = "Hypothesis", y = "Probability") +</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme_minimal() +</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a><span class="co">#   scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a><span class="co">#   theme(axis.text.x = element_text(angle = 45, hjust = 1))</span></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Show analyst's recommended rectangle and confidence</span></span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>analyst_recommended <span class="ot">&lt;-</span> analyst_hypotheses[<span class="fu">which.max</span>(analyst_hypotheses<span class="sc">$</span>posterior), ]</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Analyst's recommended rectangle:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Analyst's recommended rectangle:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">rownames</span>(analyst_recommended))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "h6"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Analyst's confidence score:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Analyst's confidence score:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(analyst_recommended[,<span class="st">"posterior"</span>] <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">/</span> <span class="fu">nrow</span>(analyst_hypotheses)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4513617</code></pre>
 </div>
 </div>
 </section>
-<section id="step-3-model-visualizes-the-updated-beliefs" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-model-visualizes-the-updated-beliefs">Step 3: Model visualizes the updated beliefs</h2>
+<section id="step-6-model-provides-feedback-on-the-analysts-guess" class="level1">
+<h1>Step 6: Model provides feedback on the analyst’s guess</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For each informant, plot posterior probabilities and show recommended rectangle</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (informant <span class="cf">in</span> <span class="fu">names</span>(updated_hypotheses_list)) {</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  updated_hypotheses <span class="ot">&lt;-</span> updated_hypotheses_list[[informant]]</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Bar plot of posterior probabilities</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(updated_hypotheses, <span class="fu">aes</span>(<span class="at">x =</span> rect_id, <span class="at">y =</span> posterior)) <span class="sc">+</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>) <span class="sc">+</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Posterior Probabilities of Hypotheses ("</span>, informant, <span class="st">")"</span>, <span class="at">sep =</span> <span class="st">""</span>),</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="st">"Hypothesis"</span>, <span class="at">y =</span> <span class="st">"Probability"</span>) <span class="sc">+</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">accuracy =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Show recommended rectangle and its probability</span></span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>  recommended_rect <span class="ot">&lt;-</span> updated_hypotheses[<span class="fu">which.max</span>(updated_hypotheses<span class="sc">$</span>posterior), ]</span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Informant:"</span>, informant))</span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"Recommended rectangle (most probable):"</span>)</span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(recommended_rect)</span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="maincode-demo_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define actual informant reliability </span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>informant_reliability <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Model makes its own inference using the true informant reliability</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>model_likelihoods <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"positive"</span> <span class="ot">=</span> <span class="fu">findProbabilityOfPoints</span>(hyp, pts, <span class="st">"pos"</span>, <span class="at">alpha =</span> informant_reliability),</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"negative"</span> <span class="ot">=</span> <span class="fu">findProbabilityOfPoints</span>(hyp, pts, <span class="st">"neg"</span>, <span class="at">alpha =</span> informant_reliability)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>model_likelihoods<span class="sc">$</span>positive <span class="ot">&lt;-</span> <span class="fu">data.matrix</span>(model_likelihoods<span class="sc">$</span>positive <span class="sc">/</span> <span class="fu">sum</span>(model_likelihoods<span class="sc">$</span>positive))</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>model_likelihoods<span class="sc">$</span>negative <span class="ot">&lt;-</span> <span class="fu">data.matrix</span>(model_likelihoods<span class="sc">$</span>negative <span class="sc">/</span> <span class="fu">sum</span>(model_likelihoods<span class="sc">$</span>negative))</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Model updates its beliefs based on the clues</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>model_hypotheses <span class="ot">&lt;-</span> <span class="fu">getHypDist</span>(new_pts, model_likelihoods, hyp)</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Model's recommended rectangle and confidence</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>model_recommended <span class="ot">&lt;-</span> model_hypotheses[<span class="fu">which.max</span>(model_hypotheses<span class="sc">$</span>posterior), ]</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>model_confidence <span class="ot">&lt;-</span> model_recommended[,<span class="st">"posterior"</span>] <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">/</span> <span class="fu">nrow</span>(model_hypotheses))</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Model's recommended rectangle (using actual informant reliability):"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Informant: helpful"
-[1] "Recommended rectangle (most probable):"
-   x1 y1 x2 y2 size negSize prior nPos consPos likePos nNeg consNeg likeNeg
-h9  1  1  2  2    1       3   0.1    0    TRUE       1    0    TRUE       1
-   posterior rect_id
-h9      0.64      h9</code></pre>
+<pre><code>[1] "Model's recommended rectangle (using actual informant reliability):"</code></pre>
 </div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="maincode-demo_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">rownames</span>(model_recommended))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Informant: unreliable"
-[1] "Recommended rectangle (most probable):"
-   x1 y1 x2 y2 size negSize prior nPos consPos likePos nNeg consNeg likeNeg
-h9  1  1  2  2    1       3   0.1    0    TRUE       1    0    TRUE       1
-   posterior rect_id
-h9 0.5071916      h9</code></pre>
+<pre><code>[1] "h6"</code></pre>
 </div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="maincode-demo_files/figure-html/unnamed-chunk-9-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Model's confidence score:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Informant: misleading"
-[1] "Recommended rectangle (most probable):"
-   x1 y1 x2 y2 size negSize prior nPos consPos likePos nNeg consNeg likeNeg
-h7  1  0  2  2    2       2   0.1    0    TRUE       1    0    TRUE       1
-   posterior rect_id
-h7      0.64      h7</code></pre>
+<pre><code>[1] "Model's confidence score:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(model_confidence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.04696653</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare analyst's and model's recommendations</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>analyst_rect <span class="ot">&lt;-</span> <span class="fu">rownames</span>(analyst_recommended)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>model_rect <span class="ot">&lt;-</span> <span class="fu">rownames</span>(model_recommended)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (analyst_rect <span class="sc">==</span> model_rect) {</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"Analyst's guess matches the model's recommendation."</span>)</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"Analyst's guess does NOT match the model's recommendation."</span>)</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Analyst's guess matches the model's recommendation."</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Feedback for calibration</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>calibration_gap <span class="ot">&lt;-</span> <span class="fu">abs</span>(analyst_recommended[,<span class="st">"posterior"</span>] <span class="sc">-</span> model_recommended[,<span class="st">"posterior"</span>])</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"Calibration gap (difference in confidence): "</span>, <span class="fu">round</span>(calibration_gap, <span class="dv">3</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Calibration gap (difference in confidence): 0.404"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (analyst_recommended[,<span class="st">"posterior"</span>] <span class="sc">&gt;</span> model_recommended[,<span class="st">"posterior"</span>]) {</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"Analyst may be overconfident given the actual informant reliability."</span>)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (analyst_recommended[,<span class="st">"posterior"</span>] <span class="sc">&lt;</span> model_recommended[,<span class="st">"posterior"</span>]) {</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"Analyst may be underconfident given the actual informant reliability."</span>)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"Analyst's confidence is well calibrated with the model's estimate."</span>)</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Analyst may be overconfident given the actual informant reliability."</code></pre>
 </div>
 </div>
-</section>
 </section>
 
 </main>

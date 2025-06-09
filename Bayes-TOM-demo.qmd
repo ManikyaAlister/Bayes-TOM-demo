@@ -11,32 +11,35 @@ library(ggpubr)
 source(here("helper-functions.R"))
 ```
 
-Maincode's mission is to build AI that does not automate human cognition, but augments it. To achieve this mission, you need to be able to make systems that allow people to both 1) make the most of the strengths that different AI systems offer, but that 2) allow people to transparently evaluate the extent to which they should rely on AI in a given context.  AI can also be improved by integrating what we know about how people are able to learn efficiently from other agents, and how they can use these agents to help them make decisions.
+Maincode's mission is to build AI that does not automate human cognition, but augments it. To achieve this mission, you need to be able to make systems that allow people to both 1) make the most of the strengths that different AI systems offer, but that 2) allow people to transparently evaluate the extent to which they should rely on AI in a given context. AI can also be improved by integrating what we know about how people are able to learn efficiently from other agents, and how they can use these agents to help them make decisions.
 
-A serious problem with the most popular AI models is that they are both overconfident and do not permit any method for a user to neither evaluate the true confidence of the model, nor do they have any explicit system to evaluate how much a user might be accurately calibrating their decision-making given the model's confidence. They are also generally much less efficient than humans ar learning, rquiring vastly more data to learn from than humans do. Cognitive science has developed a number of models that can help us understand how people learn efficiently from other agents, and how they can use these agents to help them make decisions. These models can be used to improve AI systems by allowing them to make assumptions about how data is generated, and track the mental states of the user relying on their reccomendation, in order to ensure their reliance on the AI system is calibrated with their uncertainty.
+A serious problem with the most popular AI models is that they are both overconfident and do not permit any method for a user to neither evaluate the true confidence of the model, nor do they have any explicit system to evaluate how much a user might be accurately calibrating their decision-making given the model's confidence. They are also generally much less efficient than humans are at learning, requiring vastly more data to learn from than humans do. Cognitive science has developed a number of models that can help us understand how people learn efficiently from other agents, and how they can use these agents to help them make better and more efficient decisions. These models can be used to improve AI systems by allowing them to make assumptions about how data is generated, and track the mental states of the user relying on their recommendation, in order to ensure their reliance on the AI system is calibrated with their uncertainty.
 
 I am not an engineer -- you know this, so hopefully it is no surprise when I say that my expertise is not in understanding the most efficient or effective ways to implement these systems. But what I do understand is human cognition. Specifically, I have a deep understanding of how and why people rely on other agents, like AI, to facilitate their decision-making. What I'm going to describe to you is a serious problem that I see in modern AI systems as it relates to helping people accurately and efficiently learn from (and with) AI agents.
 
-What I'm going to show you in this demo is an application of what are called Bayesian theory of mind models. These kinds of models are very powerful because they offer an explanation for how, by learning *from* other agents, people are able to learn so much more efficiently than even the best AI models (the amount of data an LLM is trained on is astronomically higher than what any human will see in their lifetime). I am specifically going to demonstrate these models on an *inductive learning* task: a task where the agent needs to learn from examples to infer some category or concept. For the sake of simplicity, I'm going to assume that you have some basic understanding of standard Bayesian inference, but you can have a look at the introduction of \[my paper\]\[https://osf.io/preprints/psyarxiv/vyw3t_v1\] for a more detailed overview.
+What I'm going to show you in this demo is an application of what are called Bayesian theory of mind models. These kinds of models are very powerful because they offer an explanation for how, by learning *from* other agents, people are able to learn so much more efficiently than even the best AI models (the amount of data an LLM is trained on is astronomically higher than what any human will see in their lifetime). I am specifically going to demonstrate these models on an *inductive learning* task: a task where the agent needs to learn from examples to infer some category or concept. For the sake of simplicity, I'm going to assume that you have some basic understanding of standard Bayesian inference, but you can have a look at the introduction of [my paper](https://osf.io/preprints/psyarxiv/vyw3t_v1) for a more detailed overview.
 
-The scenario that I'm going to demonstrate here is as follows: imagine you are playing a game where you need to guess the size and location of a rectangle given some clues that someone has provided for you. The AI in this scenario also has access to the same clues and uses a Bayesian model to infer the most likely rectangle, depending on how competent an helpful it believes the clue-giver (informant) is. The model can not only provide its recommendation, but can also describe the uncertainty of its predictions and help the human judge whether they are relying on the AIs recommendations as well as the informant's clues, appropriately.
+The scenario that I'm going to demonstrate here is as follows: imagine you are playing a game where you need to guess the size and location of a rectangular area given some clues that someone has provided for you. The AI in this scenario also has access to the same clues and uses a Bayesian model to infer the most likely rectangle, depending on how competent and helpful it believes the clue-giver (informant) is. The model can not only provide its recommendation, but can also describe the uncertainty of its predictions and help the human judge whether they are relying on the AIs recommendations as well as the informant's clues, appropriately.
 
-This basic inference game can easily by scaled up to a number of real-world decision-making scenarios:    
-- **Power outage mapping** An analyst is trying to guess which area of a city has lost power. They receive a few addresses from someone monitoring citizen reports, and need to infer the whole area of the outage based on the few reports that have been shown to them. These repoorts could have been chosen by a helpful informant who is delivberately choosing reports to help the analyst infer the outage area, or by an unreliable informant who is choosing reports at random, 
-- **Military surveillance** A scout shares sightings of enemy equipment at a few points on a grid. The analyst's task is to infer the enemy base location based on these clues.The scout could be helpful and reliable, or they could be unreliable and misleading (such as if they have beem comprimised).
-- **Environmental hazard detection** A team is trying to identify a contamination zone in a forest based on sensor readings from a few locations. The analyst must infer the extent of the contamination area based on these readings. Similar to above, there are many ways that the sensor readings could be chosen that affect the analyst's ability to infer the contamination zone. 
-- **Crime scene analysis** A detective receives witness reports of suspicious activity at various locations in a neighborhood. They need to infer the area where the crime occurred based on these reports. If the witness reports are potentially spurious or unreliable, the detective's inference will be affected compared to if the reports are reliable and helpful.
+This basic inference game can easily by scaled up to a number of real-world decision-making scenarios:\
+- **Power outage mapping** An analyst is trying to guess which area of a city has lost power. They receive a few addresses from someone monitoring citizen reports, and need to infer the whole area of the outage based on the few reports that have been shown to them. These reports could have been chosen by a helpful informant who is deliberately choosing reports to help the analyst infer the outage area, or by an unreliable informant who is choosing reports at random.
+
+\- **Military surveillance** A scout shares sightings of enemy equipment at a few points on a grid. The analyst's task is to infer the enemy base location based on these clues.The scout could be helpful and reliable, or they could be unreliable and misleading (such as if they have been compromised).
+
+\- **Environmental hazard detection** A team is trying to identify a contamination zone in a forest based on sensor readings from a few locations. The analyst must infer the extent of the contamination area based on these readings. Similar to above, there are many ways that the sensor readings could be chosen that affect the analyst's ability to infer the contamination zone.
+
+\- **Crime scene analysis** A detective receives witness reports of suspicious activity at various locations in a neighborhood. They need to infer the area where the crime occurred based on these reports. If the witness reports are potentially spurious or unreliable, the detective's inference will be affected compared to if the reports are reliable and helpful.
 
 And many more. The point is that the model can be used to help people make decisions in a wide range of scenarios where they need to infer some hidden structure from a few clues, and where the trustworthiness of the informant is uncertain but can be inferred.
 
-Although this demo is not going to present anything tremendously groundbreaking or transformative (I don't think that's what you're asking for), it will offer very preliminary insight into how Bayesian models of reasoning developed in cognitive science to understand how *people* learn and decide quickly and (in most cases) accurately, can be used to both make AI systems learn quickly, by allowing them to make assumptions about how data is generated, and track the mental states of the user relying on their reccomendation, in order to ensure their reliance on the AI system is calibrated with their uncertainty.
+The goal of this demo is to offer very preliminary insight into how models developed in cognitive science to understand how *people* learn and decide efficiently and (in most cases) accurately, can be used to both make AI systems learn better, by allowing them to make assumptions about how data is generated, as well as track the mental states and behaviour of the user/analyst.
 
-## Setup Hypothesis Space
+# Setup Hypothesis Space
 
 We begin by defining a simple 2D grid and generating all possible rectangular hypotheses. Each hypothesis represents a possible hidden space that an informant could be trying to convey.
 
 ```{r}
-H <- 2
+H <- 3
 x <- 0:H
 y <- 0:H
 pts_x <- seq(0.5, H - 0.5, 1)
@@ -47,56 +50,41 @@ hyp <- makeBorders(x, y)
 hyp$prior <- rep(0.1, nrow(hyp))
 hyp$rect_id <- rownames(hyp)
 justHyp <- hyp[, 1:4]
-
-
 ```
 
 ### Plot all possible hypotheses
 
-This plot shows the full hypothesis space — all possible rectangles over the grid.
+This plot shows the full hypothesis space — all possible areas that the informant could be trying to convey in the grid.
 
 ```{r}
-plotEmptyHypotheses <- function(hyp, pt = NULL) {
-  plot <- ggplot() +
-    geom_rect(data = hyp, fill = "lightblue", color = "black", alpha = 0.7,
-              aes(xmin = x1, xmax = x2, ymin = y1, ymax = y2)) +
-    scale_x_continuous(breaks = 0:2, minor_breaks = 0:2) +
-    scale_y_continuous(breaks = 0:2, minor_breaks = 0:2) +
-    coord_fixed() +
-    facet_wrap(~ rect_id) +
-    theme_minimal() +
-    labs(title = "All possible hypotheses", x = "X", y = "Y")
-
-  if (!is.null(pt)) {
-    plot <- plot + geom_point(data = pt, aes(x = x, y = y))
-  }
-  plot
-}
-
 plotEmptyHypotheses(hyp)
 ```
 
-## Define the assumed reliability of the informant
+# Scenario: program the model's inference based on intel about the informant
 
-These parameters define how the model perceives the informant's ability. An alpha of \< 0 means that the model assumes the informant is trying to *minimise* their belief in the true hypothesis. In other words, that they're tying to systematically mislead them. An alpha of \> 0 means that the provider is trying to *maximise* their belief in the true hypothesis (be helpful). An alpha of 0 means that clues are being chosen at random (they are unreliable).
+In this scenario, we will imagine that we have some assumptions about how much we want to trust an informant, which we can then program into the model. This feature is especially useful in contexts where you do not have access to a model's long-term reliability data with which to train a model, which is often the case in real-world applications. However, if you did have such data, you could easily have the model learn the informant's reliability instead.
 
-In this demo, I'll define three kinds of possible informants. Helpful & Unreliable (alpha = 0.1), Helpful & Reliable (alpha = 2), completely misleading (alpha = -2).
+## Step 1: Define how much the model should trust the informant
+
+The model I am demonstrating today has a single parameter that defines how much the model trusts an informant. An alpha of \< 0 means that the model assumes the informant is trying to *minimise* their belief in the true hypothesis. In other words, that they're tying to systematically mislead them. An alpha of \> 0 means that the informant is trying to *maximise* their belief in the true hypothesis (be helpful). An alpha of 0 means that clues are being chosen at random (they are unreliable).
+
+In this demo, I'll define three kinds of possible informants. Helpful but unreliable (alpha = 0.1), helpful & reliable (alpha = 2), and completely misleading (alpha = -2).
 
 ```{r}
-providers = c(helpful = 2, unreliable = 0.1, misleading = -2)
-providers
+informants = c(helpful = 2, unreliable = 0.1, misleading = -2)
+informants
 ```
 
-## Step 1: The model calculates how probable it is that a learer would choose different points for each possible hypothesis.
+## Step 2: The model calculates how probable it is that a learner would choose different points for each possible hypothesis.
 
-There are two kinds of clues a provider could choose: "positive" points that are inside of the true rectangle, and "negative" points, that are outside of the true rectangle. I won't go into detail about how/why the model calculates the likelihood of different points given each possible rectangle (it's statistical rule based on the size of each rectangle, such that in helpful contexts it assumes smaller rectangles consistent with positive points are more likely, and larger rectangles consistent with negative points are more likely), but again, refer to my paper linked earlier for more detail.
+There are two kinds of clues a informant could choose: "positive" points that are inside of the true rectangle, and "negative" points, that are outside of the true rectangle. I won't go into detail about how/why the model calculates the likelihood of different points given each possible rectangle (it's statistical rule based on the size of each rectangle, such that in helpful contexts it assumes smaller rectangles consistent with positive points are more likely, and larger rectangles consistent with negative points are more likely), but again, refer to my paper linked earlier for more detail.
 
 ```{r}
 all_likelihoods = NULL
 all_plots = NULL 
-for (i in 1:length(providers)){
-informant_alpha <- providers[i]
-informant <- names(providers)[i]
+for (i in 1:length(informants)){
+informant_alpha <- informants[i]
+informant <- names(informants)[i]
 ppp <- findProbabilityOfPoints(hyp, pts, "pos", alpha = informant_alpha)
 ppp <- data.matrix(ppp / sum(ppp))
 nnn <- findProbabilityOfPoints(hyp, pts, "neg", alpha = informant_alpha)
@@ -111,39 +99,16 @@ plot <- plotMultiplePointPosteriors(hyp, ppp, yrange = 0:H, xrange = 0:H)
 plot <- annotate_figure(plot, top = paste0("Probability that a informant would choose different points in the grid assuming the informant is: ", informant))
 all_plots[[informant]] <- plot
 }
-
-
 ```
 
-# Scenario 1: program the model's inference based on intel about the informant
+Now we'll simulate how different informants provide clues and how the model updates its beliefs.
 
-This feature is especially useful in contexts where you do not have access to a model's long-term reliability data with which to train a model, which is often the case in real-world applications. 
-
-### Visualize Initial Likelihoods
-
-Each panel shows the likelihood that a given point would be sampled by the informant assuming a specific rectangle is the true hypothesis. Higher values indicate more probable samples.
+# Step 3: The informant provides clues
 
 ```{r}
-all_plots
-```
-
-The point of the above plot is to show that the model thinks the provider would be more likely to choose different points as a function of 1) what the true rectangle actually is, and 2) how helpful/reliable they are. This is how the model ultimately infers what the true rectangle is given some clues. \## Simulate informant Behavior and Model Inference
-
-Now we'll simulate how different informants provide clues and how the model updates its beliefs. We'll examine three scenarios: helpful, unreliable, and misleading informants.
-
-# Choose clues
-
-```{r}
-# select 2 random points from in the grid
+# for the sake of this demo, let's just select 2 random points from in the grid
 set.seed(123)
-samplePoint <- function(pts, size = 2) {
-  index <- sample(1:nrow(pts), size = size, replace = FALSE)
-  # randomly assign a sign to the points
-  # "positive" points are inside the rectangle, "negative" points are outside
-  sign <- sample(c("positive", "negative"), size = size, replace = TRUE, prob = c(0.5, 0.5))
-  point <- cbind(index = index, pts[index, ], category = sign)
-  point
-}
+
 
 new_pts <- samplePoint(pts)
 new_pts
@@ -161,27 +126,13 @@ ggplot() +
   labs(title = "Selected Points", x = "X", y = "Y")
 ```
 
-For simplicity, let's assume theat the informant cannot lie. This means that according to the clues, the rectangles depicted above are the only possible rectangles that could be the true rectangle. 
+For simplicity, let's assume that the informant cannot lie (as I describe in my paper linked earlier, this is actually a pretty realistic assumption to make in most contexts). This assumption means that according to the clues, the rectangles depicted above are the only possible rectangles that could be the true rectangle.
 
-## Step 2: Model updates its beliefs based on the clues
+# Step 4: Model updates its beliefs based on the clues
 
-Now that we have the clues, we can update the model's beliefs about the true rectangle. The model will calculate the posterior probabilities of each hypothesis given the clues and its assumed reliability of the informant.
+Now that we have the clues, we can update the model's beliefs about the true rectangle. The model will calculate the posterior probabilities of each hypothesis given the clues it has seen and how much it trusts the informant.
 
 ```{r}
-getHypDist <- function(new_pts, likelihoods, hyp) {
-  posterior <- hyp$prior
-  for (i in 1:nrow(new_pts)) {
-    category <- new_pts[i, "category"]
-    hyp_probs <- likelihoods[[category]][new_pts[i, "index"], ]
-    posterior <- posterior * hyp_probs
-  }
-  posterior <- posterior / sum(posterior)
-  hyp$posterior <- posterior
-  hyp <- hyp[hyp$posterior != 0, ]
-  hyp
-}
-
-
 updated_hypotheses_list <- list()
 plots_list <- list()
 
@@ -196,17 +147,24 @@ for (informant in names(all_likelihoods)) {
 plots_list[[1]]
 ```
 
-## Step 3: Model visualizes the updated beliefs
+Assuming that the analyst is not lying, these are the only hypotheses that are consistent with the clues. The model's job now is to figure out which is most likely given how much it trusts the informant.
+
 ```{r}
+# calculate whas chance confidence would be given how many eligible hypotheses there are that are consistent with thhe clues 
+chance <- 1/nrow(updated_hypotheses)
+
+# define plot colours for different informants
+plot_colours <- c(helpful = "darkgreen", unreliable = "orange", misleading = "red")
+
 # For each informant, plot posterior probabilities and show recommended rectangle
 for (informant in names(updated_hypotheses_list)) {
   updated_hypotheses <- updated_hypotheses_list[[informant]]
-  
+
   # Bar plot of posterior probabilities
   print(
     ggplot(updated_hypotheses, aes(x = rect_id, y = posterior)) +
-      geom_bar(stat = "identity", fill = "lightblue") +
-      labs(title = paste("Posterior Probabilities of Hypotheses (", informant, ")", sep = ""),
+      geom_bar(stat = "identity", fill = plot_colours[informant]) +
+      labs(title = paste0(" Probabilities of hypotheses assuming the informant is **", informant, "**"),
            x = "Hypothesis", y = "Probability") +
       theme_minimal() +
       scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
@@ -215,20 +173,96 @@ for (informant in names(updated_hypotheses_list)) {
   
   # Show recommended rectangle and its probability
   recommended_rect <- updated_hypotheses[which.max(updated_hypotheses$posterior), ]
-  print(paste("Informant:", informant))
+  print(paste0("Assuming the informant is: ", informant))
   print("Recommended rectangle (most probable):")
-  print(recommended_rect)
+  print(rownames(recommended_rect))
+  print("Confidence score: ") # confidence score is the model posterior - chance, such that if the model is guessing, confidence is 0. 
+  print(recommended_rect[,"posterior"] - chance)
 }
 ```
 
-# Step 4: checking the human's calibration with the model's confidence
-If we simulate the above process multiple times, assuming that a human analyst is also making decisions based on the model's recommendations, we can evaluate how well the human is calibrating their decisions with the model's confidence.
+The above plots show a few things. First, they show how the model can adjust its inferences based on what we tell it about the informant: in this case, how much it should trust the clues it gives. This is very useful, because it allows the model to calibrate the efficiency with which it learns from someone based on what it knows about the informant, much like how humans do. This facilitates a vastly superior human-AI interaction, because in contexts where you have highly proficient and trustworthy informants, the model can learn much faster and more efficiently than it otherwise would. However, it can also adjust to situations where this is not the case, such as when the informant is basically just guessing, or if they may be systematically trying to mislead the analyst.
+
+Second the plots show us how, using these models, we can get not just a recommendation for what the most likely hypothesis is, but also how confident the model is about that recomendation. This is a key strength of Bayesian inference, as it naturally calculates the probability of every choice alternative, therefore providing the analyst more information to make their own inference.
+
+# Step 5: Analyst makes their own inference based on the clue
+
+Another advantage of this type of models is that it can not only make recommendations to a human analyst, but it can also monitor the analyst's decisions and give feedback on the quality of their inferences. Let's examine such a scenario:
 
 ```{r}
-# simulate multiple rounds of inference, wheree the model assumes alpha of 0.5 (moderately helpful), but the human analyst assumes alpha of 2 (very helpful). The model should make a reccomendation as to whether the human is over trusting the provider, by evaluating the distance between their guess and that of the model's recommendation.
+# model analyst guess assuming a particular alpha. Let's first assume that they are overly trusting: 
+analyst_trust <- 3
+analyst <- "trusting"
 
+# The analyst uses their own trust parameter to compute likelihoods
+analyst_likelihoods <- list(
+  "positive" = findProbabilityOfPoints(hyp, pts, "pos", alpha = analyst_trust),
+  "negative" = findProbabilityOfPoints(hyp, pts, "neg", alpha = analyst_trust)
+)
+analyst_likelihoods$positive <- data.matrix(analyst_likelihoods$positive / sum(analyst_likelihoods$positive))
+analyst_likelihoods$negative <- data.matrix(analyst_likelihoods$negative / sum(analyst_likelihoods$negative))
+
+# Analyst updates their beliefs based on the clues
+analyst_hypotheses <- getHypDist(new_pts, analyst_likelihoods, hyp)
+# Show analyst's recommended rectangle and confidence
+analyst_recommended <- analyst_hypotheses[which.max(analyst_hypotheses$posterior), ]
+print(paste0("Analyst's choice: ", rownames(analyst_recommended)))
+print(paste0("Analyst's confidence score: ", analyst_recommended[,"posterior"] - (1 / nrow(analyst_hypotheses))))
 
 ```
-````{r}
 
+# Step 6: Model provides feedback on the analyst's guess
+
+```{r}
+# define actual informant reliability 
+informant_reliability <- 0.3
+
+# Model makes its own inference using the true informant reliability
+model_likelihoods <- list(
+  "positive" = findProbabilityOfPoints(hyp, pts, "pos", alpha = informant_reliability),
+  "negative" = findProbabilityOfPoints(hyp, pts, "neg", alpha = informant_reliability)
+)
+model_likelihoods$positive <- data.matrix(model_likelihoods$positive / sum(model_likelihoods$positive))
+model_likelihoods$negative <- data.matrix(model_likelihoods$negative / sum(model_likelihoods$negative))
+
+# Model updates its beliefs based on the clues
+model_hypotheses <- getHypDist(new_pts, model_likelihoods, hyp)
+
+# Model's recommended rectangle and confidence
+model_recommended <- model_hypotheses[which.max(model_hypotheses$posterior), ]
+model_confidence <- model_recommended[,"posterior"] - (1 / nrow(model_hypotheses))
+
+print("Model's recommended rectangle (using actual informant reliability):")
+print(rownames(model_recommended))
+print("Model's confidence score:")
+print(model_confidence)
+
+# Compare analyst's and model's recommendations
+analyst_rect <- rownames(analyst_recommended)
+model_rect <- rownames(model_recommended)
+
+if (analyst_rect == model_rect) {
+  print("Analyst's guess matches the model's recommendation.")
+} else {
+  print("Analyst's guess does NOT match the model's recommendation.")
+}
+
+# Feedback for calibration
+calibration_gap <- abs(analyst_recommended[,"posterior"] - model_recommended[,"posterior"])
+print(paste0("Calibration gap (difference in confidence): ", round(calibration_gap, 3)))
+
+
+if (analyst_recommended[,"posterior"] > model_recommended[,"posterior"]) {
+  print("Analyst may be overconfident given the actual informant reliability.")
+} else if (analyst_recommended[,"posterior"] < model_recommended[,"posterior"]) {
+  print("Analyst may be underconfident given the actual informant reliability.")
+} else {
+  print("Analyst's confidence is well calibrated with the model's estimate.")
+}
 ```
+
+# Discussion
+
+You can imagine that his kind of system would be especially valuable over multiple iterations, where informants can learn to calibrate their suggestions to help the model learn, and where the model calibrate its output to ensure that an analyst is using its recommendations appropriately.
+
+As I mentioned earlier, we have demonstrated a context where the informant trustworthiness is hard coded into the model. I think this is useful, because it allows the model to make informed inferences even if we do not have the ability to evaluate the ground truth after an informant has made a decision, which may be the case in a lot of reasoning scenarios. However, an optimal system would be one where a model is programmed with a prior of what the informant's reliability is believed to be (perhaps starting with a conservative assumption that they are unreliable) but that then adapts as more context is gained as to the informant's actual reliability: a system that would be relatively straightforward to implement with this kind of modelling framework.
