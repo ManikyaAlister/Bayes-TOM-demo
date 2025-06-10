@@ -4,6 +4,12 @@ This is a minimal demonstration of how Bayesian Theory of Mind (Bayes-TOM) model
 
 It also illustrates how a model can generate recommendations, compare them to a human analyst's decision, and provide feedback about calibration.
 
+Click the link to see the demo here as a rendered HTML from quarto:
+
+https://0197573e-65ed-45ac-90d1-6b10dc004c91.share.connect.posit.cloud/
+
+To run and edit the source code directly, read on. 
+
 ---
 
 ## Files
@@ -23,7 +29,7 @@ I have integrated the design report and code into a single Quarto document rende
 ## How to View the Demo
 
 **Quickest option:**  
-Open `Bayes-TOM-demo.html` in any modern browser.
+Open `Bayes-TOM-demo.html` in any modern browser or click the link above.
 
 **To run the code yourself:**
 
