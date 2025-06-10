@@ -27,10 +27,5 @@ Open `Bayes-TOM-demo.html` in any modern browser.
 **To run the code yourself:**
 
 1. Make sure you have R and [Quarto](https://quarto.org/) installed.
-2. Open R and run:
-
-   `renv::restore()`
-   
-   This automatically installs all required R packages. 
    
 3. Open the `.qmd` file in Rstudio or VS Code and run chunk by chunk OR render the quarto file by running `quarto::quarto_render("Bayes-TOM-demo.qmd")`

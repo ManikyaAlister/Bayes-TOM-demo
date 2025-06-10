@@ -12,8 +12,8 @@ format:
 editor: visual
 ---
 
-
 ```{r}
+renv::restore() # automatically installs all necessary packages if not installed already
 library(here)        # for reproducible file referencing
 library(tidyverse)   # data wrangling and plotting
 library(ggpubr)      # for arranging ggplots with shared legends
@@ -24,7 +24,7 @@ source(here("helper-functions.R"))
 
 Maincode's mission is to build AI that does not automate human cognition, but augments it. To achieve this mission, you need to build systems that allow people to both: 1) make the most of the strengths that different AI systems offer, and 2) transparently evaluate the extent to which they should rely on AI in a given context. AI can also be improved by integrating what we know about how people learn efficiently from other agents, and how they use these agents to help make decisions.
 
-A serious problem with most popular AI models is that they are often overconfident and lack any mechanism to allow users to evaluate the true confidence of the model. AI models also tend to be unable to explicitly work *with* their users to accurately calibrate the extent to which users rely on their recommendations. 
+A serious problem with most popular AI models is that they are often overconfident and lack any mechanism to allow users to evaluate the true confidence of the model. AI models also tend to be unable to explicitly work *with* their users to accurately calibrate the extent to which users rely on their recommendations.
 
 Most AI is also generally much less efficient than humans at learning, requiring vastly more data. Cognitive science has developed models that help us understand how people learn efficiently from other agents, and how they use these agents to make better decisions. These models can improve AI systems by allowing them to make assumptions about how data is generated, and track the mental states of the user relying on their recommendations, ensuring their reliance is well calibrated with uncertainty.
 
@@ -36,13 +36,13 @@ The scenario I’ll demonstrate is this: imagine you’re playing a game where y
 
 This basic inference game can easily be scaled to a number of real-world decision-making scenarios:
 
-- **Military surveillance:** A spy shares sightings of enemy equipment at a few points on a grid. The analyst must infer the enemy base location based on these clues. The scout could be reliable and helpful, or unreliable and misleading (e.g., compromised).
+-   **Military surveillance:** A spy shares sightings of enemy equipment at a few points on a grid. The analyst must infer the enemy base location based on these clues. The scout could be reliable and helpful, or unreliable and misleading (e.g., compromised).
 
-- **Power outage mapping:** An analyst tries to guess which area of a city has lost power. They receive a few addresses from someone monitoring citizen reports, and infer the whole outage area based on these few reports. The reports could be from a helpful informant deliberately choosing useful reports, or from an unreliable informant choosing reports at random.
+-   **Power outage mapping:** An analyst tries to guess which area of a city has lost power. They receive a few addresses from someone monitoring citizen reports, and infer the whole outage area based on these few reports. The reports could be from a helpful informant deliberately choosing useful reports, or from an unreliable informant choosing reports at random.
 
-- **Environmental hazard detection:** A team tries to identify a contamination zone in a forest based on sensor readings from a few locations. The analyst must infer the extent of contamination based on these readings, which may be chosen in various ways affecting inference.
+-   **Environmental hazard detection:** A team tries to identify a contamination zone in a forest based on sensor readings from a few locations. The analyst must infer the extent of contamination based on these readings, which may be chosen in various ways affecting inference.
 
-- **Crime scene analysis:** A detective receives witness reports of suspicious activity at various neighborhood locations. They need to infer the crime area based on these reports. If witness reports are unreliable or spurious, the detective's inference will be affected compared to if the reports are reliable.
+-   **Crime scene analysis:** A detective receives witness reports of suspicious activity at various neighborhood locations. They need to infer the crime area based on these reports. If witness reports are unreliable or spurious, the detective's inference will be affected compared to if the reports are reliable.
 
 And many more. The point is that the model can be used to help people make decisions in a wide range of scenarios where they need to infer some hidden structure from a few clues, and where the trustworthiness of the informant is uncertain but can be inferred.
 
@@ -50,7 +50,7 @@ The goal of this demo is to offer very preliminary insight into how models devel
 
 # Scenario: program the model's inference based on intel about the informant
 
-In this scenario, we assume have information that allows us to infer how much to trust the informant, which we can program into the model. In practice, this could be derived from the informant's track record of providing reliable data, their qualifications, conflicts of interests (or lack thereof), just to name a few. 
+In this scenario, we assume have information that allows us to infer how much to trust the informant, which we can program into the model. In practice, this could be derived from the informant's track record of providing reliable data, their qualifications, conflicts of interests (or lack thereof), just to name a few.
 
 ## Setup Hypothesis Space
 
@@ -90,7 +90,7 @@ plot_empty_hypotheses(hyp)
 
 ## Step 1: Define how much the model should trust the informant
 
-The model I will demonstrate has a single parameter, alpha, which defines how much it trusts an informant. An alpha < 0 means the model assumes the informant is trying to *minimise* belief in the true hypothesis. That is, to systematically mislead the model/analyst. An alpha > 0 means the informant is trying to *maximise* belief in the true hypothesis (i.e., be helpful). An alpha = 0  means that clues are being chosen at random (they are unreliable). In theory, it would be easy to develop a system that learns the appropriate alpha value from interacting with an informant over time, but that will not be the focus of this demo. 
+The model I will demonstrate has a single parameter, alpha, which defines how much it trusts an informant. An alpha \< 0 means the model assumes the informant is trying to *minimise* belief in the true hypothesis. That is, to systematically mislead the model/analyst. An alpha \> 0 means the informant is trying to *maximise* belief in the true hypothesis (i.e., be helpful). An alpha = 0 means that clues are being chosen at random (they are unreliable). In theory, it would be easy to develop a system that learns the appropriate alpha value from interacting with an informant over time, but that will not be the focus of this demo.
 
 I'll define three kinds of possible informants. Helpful but unreliable (alpha = 0.1), helpful & reliable (alpha = 2), and completely misleading (alpha = -2).
 
@@ -199,7 +199,7 @@ Second the plots show us how, using these models, we can get not just a recommen
 
 ## Step 5: Analyst makes their own inference based on the clue
 
-Another advantage of this type of models is that it can not only make recommendations to a human analyst, but it can also monitor the analyst's decisions and give feedback on the quality of their inferences. Let's examine such a scenario, specifically, one where the model severely over-trusts the informant based on the informant's actual reliability: 
+Another advantage of this type of models is that it can not only make recommendations to a human analyst, but it can also monitor the analyst's decisions and give feedback on the quality of their inferences. Let's examine such a scenario, specifically, one where the model severely over-trusts the informant based on the informant's actual reliability:
 
 ```{r}
 # model analyst guess assuming a particular alpha. Let's first assume that they are overly trusting: 
@@ -285,10 +285,10 @@ For instance, a deployed version of this system could be used to support analyst
 
 This kind of human-centered AI is not only technically feasible but urgently needed—and I'd be excited to help build it.
 
-# Clarifying my goals and fit 
+# Clarifying my goals and fit
 
 Lastly, I want to clarify what I’m hoping for in a position at Maincode. I’m a cognitive scientist, and my primary motivation is to understand how AI can augment *human* decision-making. I’m especially interested in the implications that new AI systems have for how people learn, reason, and calibrate their judgments. Not just in building new architectures, but in exploring how those systems interact with human cognition.
 
 From our earlier conversation, I understand that the AI Scientist role may be more focused on developing novel architectures. If that is the case, then I’d be very open to discussing alternative arrangements that might be a better fit: whether that's a visiting scholar position, an applied cognitive science role, a part-time collaboration, or a consulting position. My main priority is to contribute in a way that aligns with my expertise and values.
 
-I'm genuinely excited about the possibility of working with Maincode. I believe there's a deep alignment between my interests and the company's mission to build AI that augments rather than replaces human intelligence. I would be eager to explore how I can contribute meaningfully to that mission. 
+I'm genuinely excited about the possibility of working with Maincode. I believe there's a deep alignment between my interests and the company's mission to build AI that augments rather than replaces human intelligence. I would be eager to explore how I can contribute meaningfully to that mission.
