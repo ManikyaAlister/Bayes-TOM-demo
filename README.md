@@ -16,6 +16,7 @@ I have integrated the design report and code into a single Quarto document rende
 - `helper-functions.R`: Modularised R functions used in the demo.
 - `renv.lock` and `renv/`: Used to manage R package dependencies.
 - `README.md`: This file.
+- `rsconnect` and `manifest.json`: files for publishing the project to the cloud. 
 
 ---
 

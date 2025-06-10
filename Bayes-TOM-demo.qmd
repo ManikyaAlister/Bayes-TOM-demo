@@ -3,6 +3,7 @@ title: "Minimal Demo: AI-Assisted Inference using Bayesian Theory of Mind"
 format:
   html:
     toc: true
+    toc-depth: 2
     code-fold: true
     code-tools: true
     code-summary: "Show code"
@@ -21,6 +22,8 @@ library(ggpubr)      # for arranging ggplots with shared legends
 # Load helper functions for rectangle inference models
 source(here("helper-functions.R"))
 ```
+
+# Overview
 
 Maincode's mission is to build AI that does not automate human cognition, but augments it. To achieve this mission, you need to build systems that allow people to both: 1) make the most of the strengths that different AI systems offer, and 2) transparently evaluate the extent to which they should rely on AI in a given context. AI can also be improved by integrating what we know about how people learn efficiently from other agents, and how they use these agents to help make decisions.
 
@@ -48,7 +51,7 @@ And many more. The point is that the model can be used to help people make decis
 
 The goal of this demo is to offer very preliminary insight into how models developed in cognitive science to understand how *people* learn and decide efficiently and (in most cases) accurately, can be used to both make AI systems learn better, by allowing them to make assumptions about how data is generated, as well as track the mental states and behavior of the user/analyst.
 
-# Scenario: program the model's inference based on intel about the informant
+# Demo: Calibrated AI inference based on knowledge about an informant
 
 In this scenario, we assume have information that allows us to infer how much to trust the informant, which we can program into the model. In practice, this could be derived from the informant's track record of providing reliable data, their qualifications, conflicts of interests (or lack thereof), just to name a few.
 
@@ -101,7 +104,7 @@ informants
 
 ```
 
-## Step 2: The model calculates how probable it is that a learner would choose different points for each possible hypothesis.
+## Step 2: The model calculates how probable it is that an informant would choose different points for each possible hypothesis.
 
 The informant can choose two kinds of clues: "positive" points inside the true rectangle, and "negative" points outside it. The model calculates the likelihood of each point for each possible rectangle based on a statistical rule favoring smaller rectangles consistent with positive points in helpful contexts, and larger rectangles consistent with negative points. For full details, see my paper linked earlier.
 
@@ -195,7 +198,7 @@ for (informant in names(updated_hypotheses_list)) {
 
 The above plots show a few things. First, they show how the model can adjust its inferences based on what we tell it about the informant: in this case, how much it should trust the clues it gives. This is very useful, because it allows the model to calibrate the efficiency with which it learns from someone based on what it knows about the informant, much like how humans do. This facilitates a vastly superior human-AI interaction, because in contexts where you have highly proficient and trustworthy informants, the model can learn much faster and more efficiently than it otherwise would. However, it can also adjust to situations where this is not the case, such as when the informant is basically just guessing, or if they may be systematically trying to mislead the analyst.
 
-Second the plots show us how, using these models, we can get not just a recommendation for what the most likely hypothesis is, but also how confident the model is about that recomendation. This is a key strength of Bayesian inference, as it naturally calculates the probability of every choice alternative, therefore providing the analyst more information to make their own inference.
+Second the plots show us how, using these models, we can get not just a recommendation for what the most likely hypothesis is, but also how confident the model is about that recommendation. This is a key strength of Bayesian inference, as it naturally calculates the probability of every choice alternative, therefore providing the analyst more information to make their own inference.
 
 ## Step 5: Analyst makes their own inference based on the clue
 
