@@ -3,7 +3,7 @@ title: "Minimal Demo: AI-Assisted Inference using Bayesian Theory of Mind"
 format:
   html:
     toc: true
-    toc-depth: 2
+    toc-depth: 4
     code-fold: true
     code-tools: true
     code-summary: "Show code"
