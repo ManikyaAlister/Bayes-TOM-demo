@@ -13,8 +13,11 @@ format:
 editor: visual
 ---
 
-```{r}
+```{r output=FALSE}
 renv::restore() # automatically installs all necessary packages if not installed already
+```
+
+```{r}
 library(here)        # for reproducible file referencing
 library(ggplot2) # plotting
 library(dplyr) # data wrangling 
