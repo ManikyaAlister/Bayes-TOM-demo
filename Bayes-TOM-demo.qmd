@@ -16,7 +16,8 @@ editor: visual
 ```{r}
 renv::restore() # automatically installs all necessary packages if not installed already
 library(here)        # for reproducible file referencing
-library(tidyverse)   # data wrangling and plotting
+library(ggplot2) # plotting
+library(dplyr) # data wrangling 
 library(ggpubr)      # for arranging ggplots with shared legends
 
 # Load helper functions for rectangle inference models
@@ -35,7 +36,7 @@ I am not an engineer — you know this, so hopefully it is no surprise when I sa
 
 In this demo, I'll show you an application of what are called Bayesian theory of mind models. These models are powerful because they explain how, by learning *from* other agents, people are able to learn far more efficiently than even the best AI models (the amount of data an LLM is trained on is astronomically higher than what any human will see in their lifetime). I will demonstrate these models on an *inductive learning* task: a task where the agent learns from examples to infer some category or concept. For simplicity, I assume you have some basic understanding of Bayesian inference, but you can look at the introduction of [my paper](https://osf.io/preprints/psyarxiv/vyw3t_v1) for a detailed overview.
 
-The scenario I’ll demonstrate is this: imagine you’re playing a game where you guess the size and location of a rectangular area given some clues provided by someone. The AI in this scenario also has access to the same clues and uses a Bayesian model to infer the most likely rectangle, depending on how competent and helpful it believes the clue-giver (informant) is. The model can provide its recommendation, describe the uncertainty of its predictions, and help the human judge whether they are relying appropriately on both the AI’s recommendations and the informant's clues.
+The scenario I’ll demonstrate is this: imagine you're playing a game where you guess the size and location of a rectangular area given some clues provided by someone. The AI in this scenario also has access to the same clues and uses a Bayesian model to infer the most likely rectangle, depending on how competent and helpful it believes the clue-giver (informant) is. The model can provide its recommendation, describe the uncertainty of its predictions, and help the human judge whether they are relying appropriately on both the AI’s recommendations and the informant's clues.
 
 This basic inference game can easily be scaled to a number of real-world decision-making scenarios:
 
@@ -54,6 +55,10 @@ The goal of this demo is to offer very preliminary insight into how models devel
 # Demo: Calibrated AI inference based on knowledge about an informant
 
 In this scenario, we assume have information that allows us to infer how much to trust the informant, which we can program into the model. In practice, this could be derived from the informant's track record of providing reliable data, their qualifications, conflicts of interests (or lack thereof), just to name a few.
+
+The informant then provides some clues about the shape and size of a rectangle that is provided to both a model and a human analyst. The model then provides a recommendation and confidence distribution based on both the clues and the informant's reliability. The analyst then can make a decision based on both the model's recommendation, and the clues. The model monitors this decision and can provide feedback to the analyst about whether the analyst is over or under trusting the informant (as well as, in theory, the model, though that is more relevant to long-term, multi interaction contexts that I do not show here). See the below figure for an overview.
+
+![Figure 1: Overview of the scenario portrayed in this demo. ](figures/scenario.png)
 
 ## Setup Hypothesis Space
 
