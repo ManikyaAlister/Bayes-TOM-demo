@@ -18,13 +18,12 @@ renv::restore() # automatically installs all necessary packages if not installed
 ```
 
 ```{r}
-library(here)        # for reproducible file referencing
 library(ggplot2) # plotting
 library(dplyr) # data wrangling 
 library(ggpubr)      # for arranging ggplots with shared legends
 
 # Load helper functions for rectangle inference models
-source(here("helper-functions.R"))
+source("helper-functions.R")
 ```
 
 # Overview
@@ -61,7 +60,7 @@ In this scenario, we assume have information that allows us to infer how much to
 
 The informant then provides some clues about the shape and size of a rectangle that is provided to both a model and a human analyst. The model then provides a recommendation and confidence distribution based on both the clues and the informant's reliability. The analyst then can make a decision based on both the model's recommendation, and the clues. The model monitors this decision and can provide feedback to the analyst about whether the analyst is over or under trusting the informant (as well as, in theory, the model, though that is more relevant to long-term, multi interaction contexts that I do not show here). See the below figure for an overview.
 
-![Figure 1: Overview of the scenario portrayed in this demo. ](figures/scenario.png)
+![Figure 1: Overview of the scenario portrayed in this demo.](figures/scenario.png)
 
 ## Setup Hypothesis Space
 
